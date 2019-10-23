@@ -3,6 +3,7 @@ package mwo.lab.tapswap
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageSwitcher
 import android.widget.ImageView
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
@@ -23,12 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private var mGestureDetector: GestureDetector? = null
 
-    private val items = arrayOf(
-        Item(R.drawable.book, "Wprowadzenie do algorytmów, Cormen", "Ciekawa fabuła, połączenie komedii i dramatu. Szczerze polecam :)"),
-        Item(R.drawable.knife, "Nusz xd", "Opis noża"),
-        Item(R.drawable.pistol, "pistolet", "piestoleteł"),
-        Item(R.drawable.watch, "zegarek", "zegrkeł")
-    )
+    private lateinit var items: Array<Item>
 
     private var mCurrentPosition = 0
 
@@ -44,6 +41,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Read mockup items from raw JSON file using GSON
+        val json: String = resources.openRawResource(R.raw.items).readBytes().toString(Charsets.UTF_8)
+        val gson = Gson()
+        items = gson.fromJson(json, Array<Item>::class.java)
+
+        // Restore currentPosition from previous instance of this activity
         if (savedInstanceState != null) {
             mCurrentPosition = savedInstanceState.getInt(currentPosition, 0)
         }
@@ -74,7 +77,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Default picture
-        mImageSwitcher?.setImageResource(items[mCurrentPosition].drawable)
+        val res = resources.getIdentifier(items[mCurrentPosition].drawable, "drawable", packageName)
+        mImageSwitcher?.setImageResource(res)
         descritpion.text = items[mCurrentPosition].description
         item_title.text = items[mCurrentPosition].title
         mGestureDetector = GestureDetector(this, SwipeListener())
@@ -110,7 +114,8 @@ class MainActivity : AppCompatActivity() {
         mImageSwitcher?.outAnimation = if (delta > 0) mSlideOutLeft else mSlideOutRight
 
         mCurrentPosition = nextImagePos
-        mImageSwitcher?.setImageResource(items[mCurrentPosition].drawable)
+        val res = resources.getIdentifier(items[mCurrentPosition].drawable, "drawable", packageName)
+        mImageSwitcher?.setImageResource(res)
         descritpion.text = items[mCurrentPosition].description
         item_title.text = items[mCurrentPosition].title
     }

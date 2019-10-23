@@ -1,5 +1,7 @@
 package mwo.lab.tapswap
 
-class Item(public val drawable: Int,
-           public val title: String,
-           public val description: String)
+data class Item(
+    val drawable: String,
+    val title: String,
+    val description: String
+)
