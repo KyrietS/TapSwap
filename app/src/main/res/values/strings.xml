@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Tap&amp;Swap</string>
+    <string name="mock_item_title">Krótki tytuł przedmiotu do oddania</string>
+    <string name="mock_item_description">Bardziej szczegółowy opis przedmiotu do oddania. Elementy zachęcające innych użytkowników do wzięcia przedmiotu. Dobry opis, to klucz do sukcesu udanej wymiany.</string>
+    <string name="reject">Odrzuć</string>
+    <string name="want">Chcę</string>
 </resources>
