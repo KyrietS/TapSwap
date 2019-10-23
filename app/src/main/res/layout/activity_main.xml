@@ -10,7 +10,7 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="15px">
+            android:padding="5dp">
 
         <ImageSwitcher
                 android:id="@+id/image"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Krótki tytuł przedmiotu do oddania"
+                android:text="@string/mock_item_title"
                 android:textColor="@color/colorTitle"
                 android:textSize="36sp"
                 android:textStyle="bold"
@@ -38,40 +38,65 @@
                 app:layout_constraintTop_toBottomOf="@+id/image" />
 
         <TextView
-                android:id="@+id/descritpion"
+                android:id="@+id/description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="Bardziej szczegółowy opis przedmiotu do oddania. Elementy zachęcające innych użytkowników do wzięcia przedmiotu. Dobry opis, to klucz do sukcesu udanej wymiany."
+                android:text="@string/mock_item_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/item_title" />
 
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descritpion">
+                tools:layout_editor_absoluteX="6dp">
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="4dip"
+                    android:layout_marginRight="4dip"
+                    android:background="?android:attr/dividerVertical" />
+
+            <View
+                    android:id="@+id/ViewColorPickerHelper"
+                    android:layout_width="1dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dip"
+                    android:layout_marginBottom="4dip"
+                    android:background="?android:attr/dividerVertical" />
 
             <Button
-                    android:id="@+id/button"
+                    android:id="@+id/BtnColorPickerCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="TAK" />
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toStartOf="@id/ViewColorPickerHelper"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/reject" />
 
             <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/BtnColorPickerOk"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NIE" />
-        </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@id/ViewColorPickerHelper"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/want" />
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 

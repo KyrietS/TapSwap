@@ -3,7 +3,6 @@ package mwo.lab.tapswap
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -17,24 +16,24 @@ import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
-    private val currentPosition = "current_position"
+    // Views
+    private lateinit var imageSwitcher: ImageSwitcher
+    private lateinit var overscrollLeft: View
+    private lateinit var overscrollRight: View
 
-    private var mImageSwitcher: ImageSwitcher? = null
-    private var mOverscrollLeft: View? = null
-    private var mOverscrollRight: View? = null
+    private lateinit var gestureDetector: GestureDetector
+    private var currentPosition = 0
 
-    private var mGestureDetector: GestureDetector? = null
+    // Animations
+    private var slideInLeft: Animation? = null
+    private var slideOutRight: Animation? = null
+    private var slideInRight: Animation? = null
+    private var slideOutLeft: Animation? = null
+    private var overscrollLeftFadeOut: Animation? = null
+    private var overscrollRightFadeOut: Animation? = null
 
+    // Mock items
     private lateinit var items: Array<Item>
-
-    private var mCurrentPosition = 0
-
-    private var mSlideInLeft: Animation? = null
-    private var mSlideOutRight: Animation? = null
-    private var mSlideInRight: Animation? = null
-    private var mSlideOutLeft: Animation? = null
-    private var mOverscrollLeftFadeOut: Animation? = null
-    private var mOverscrollRightFadeOut: Animation? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,101 +45,80 @@ class MainActivity : AppCompatActivity() {
         val gson = Gson()
         items = gson.fromJson(json, Array<Item>::class.java)
 
-        // Restore currentPosition from previous instance of this activity
-        if (savedInstanceState != null) {
-            mCurrentPosition = savedInstanceState.getInt(currentPosition, 0)
-        }
-
         // Views
-        mImageSwitcher = findViewById(R.id.image)
-        mOverscrollLeft = findViewById(R.id.overscroll_left)
-        mOverscrollRight = findViewById(R.id.overscroll_right)
+        imageSwitcher = findViewById(R.id.image)
+        overscrollLeft = findViewById(R.id.overscroll_left)
+        overscrollRight = findViewById(R.id.overscroll_right)
 
         // Animations
-        mSlideInLeft = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
-        mSlideOutRight = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right)
-        mSlideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right)
-        mSlideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left)
-
-        mOverscrollLeftFadeOut = AnimationUtils
-            .loadAnimation(this, R.anim.fade_out)
-        mOverscrollRightFadeOut = AnimationUtils.loadAnimation(
-            this,
-            R.anim.fade_out
-        )
+        slideInLeft = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
+        slideOutRight = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right)
+        slideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right)
+        slideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left)
+        overscrollLeftFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+        overscrollRightFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
 
         // ImageSwitcher
-        mImageSwitcher?.setFactory {
+        imageSwitcher.setFactory {
             val view = ImageView(this@MainActivity)
             view.scaleType = ImageView.ScaleType.FIT_XY
             view
         }
 
-        // Default picture
-        val res = resources.getIdentifier(items[mCurrentPosition].drawable, "drawable", packageName)
-        mImageSwitcher?.setImageResource(res)
-        descritpion.text = items[mCurrentPosition].description
-        item_title.text = items[mCurrentPosition].title
-        mGestureDetector = GestureDetector(this, SwipeListener())
-        mImageSwitcher?.setOnTouchListener { _, event ->
-            mGestureDetector?.onTouchEvent(event)
+        // Setting up gesture detector for swipes left & right
+        gestureDetector = GestureDetector(this, SwipeListener())
+        imageSwitcher.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
             true
         }
-    }
 
-    /* Restore image position when back from other app */
-    public override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        if (outState == null) {
-            return
-        }
-        outState.putInt(currentPosition, mCurrentPosition)
+        // Default picture
+        moveNextOrPrevious(0)
     }
 
     private fun moveNextOrPrevious(delta: Int) {
-        val nextImagePos = mCurrentPosition + delta
+        val nextImagePos = currentPosition + delta
+
+        // overscroll (no more photos) effect on the side on the screen
         if (nextImagePos < 0) {
-            mOverscrollLeft?.visibility = View.VISIBLE
-            mOverscrollLeft?.startAnimation(mOverscrollLeftFadeOut)
+            overscrollLeft.visibility = View.VISIBLE
+            overscrollLeft.startAnimation(overscrollLeftFadeOut)
             return
         }
         if (nextImagePos >= items.size) {
-            mOverscrollRight?.visibility = View.VISIBLE
-            mOverscrollRight?.startAnimation(mOverscrollRightFadeOut)
+            overscrollRight.visibility = View.VISIBLE
+            overscrollRight.startAnimation(overscrollRightFadeOut)
             return
         }
 
-        mImageSwitcher?.inAnimation = if (delta > 0) mSlideInRight else mSlideInLeft
-        mImageSwitcher?.outAnimation = if (delta > 0) mSlideOutLeft else mSlideOutRight
+        // Swipe animations
+        imageSwitcher.inAnimation = if (delta > 0) slideInRight else slideInLeft
+        imageSwitcher.outAnimation = if (delta > 0) slideOutLeft else slideOutRight
 
-        mCurrentPosition = nextImagePos
-        val res = resources.getIdentifier(items[mCurrentPosition].drawable, "drawable", packageName)
-        mImageSwitcher?.setImageResource(res)
-        descritpion.text = items[mCurrentPosition].description
-        item_title.text = items[mCurrentPosition].title
+        // Displaying new image with it's data
+        currentPosition = nextImagePos
+        val res = resources.getIdentifier(items[currentPosition].drawable, "drawable", packageName)
+        imageSwitcher.setImageResource(res)
+        description.text = items[currentPosition].description
+        item_title.text = items[currentPosition].title
     }
 
     private inner class SwipeListener : GestureDetector.SimpleOnGestureListener() {
 
-        override fun onFling( e1: MotionEvent, e2: MotionEvent, velocityX: Float,
-                              velocityY: Float ): Boolean {
-
+        override fun onFling( e1: MotionEvent, e2: MotionEvent,
+                              velocityX: Float, velocityY: Float ): Boolean {
             /* Swipe parameters */
             val swipeMinDistance = 75
             val swipeMaxOffPath = 250
             val swipeThresholdVelocity = 200
 
-            try {
-                if (abs(e1.y - e2.y) > swipeMaxOffPath)
-                    return false
-                // right to left swipe
-                if (e1.x - e2.x > swipeMinDistance && abs(velocityX) > swipeThresholdVelocity) {
-                    moveNextOrPrevious(1)
-                } else if (e2.x - e1.x > swipeMinDistance && abs(velocityX) > swipeThresholdVelocity) {
-                    moveNextOrPrevious(-1)
-                }
-            } catch (e: Exception) {
-                // nothing
+            if (abs(e1.y - e2.y) > swipeMaxOffPath)
+                return false
+            // right to left swipe
+            if (e1.x - e2.x > swipeMinDistance && abs(velocityX) > swipeThresholdVelocity) {
+                moveNextOrPrevious(1)
+            } else if (e2.x - e1.x > swipeMinDistance && abs(velocityX) > swipeThresholdVelocity) {
+                moveNextOrPrevious(-1)
             }
 
             return false
