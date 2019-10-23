@@ -10,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageSwitcher
 import android.widget.ImageView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
@@ -22,12 +23,13 @@ class MainActivity : AppCompatActivity() {
 
     private var mGestureDetector: GestureDetector? = null
 
-    private val mImages = intArrayOf(
-        R.drawable.book,
-        R.drawable.knife,
-        R.drawable.pistol,
-        R.drawable.watch
+    private val items = arrayOf(
+        Item(R.drawable.book, "Wprowadzenie do algorytmów, Cormen", "Ciekawa fabuła, połączenie komedii i dramatu. Szczerze polecam :)"),
+        Item(R.drawable.knife, "Nusz xd", "Opis noża"),
+        Item(R.drawable.pistol, "pistolet", "piestoleteł"),
+        Item(R.drawable.watch, "zegarek", "zegrkeł")
     )
+
     private var mCurrentPosition = 0
 
     private var mSlideInLeft: Animation? = null
@@ -67,16 +69,14 @@ class MainActivity : AppCompatActivity() {
         // ImageSwitcher
         mImageSwitcher?.setFactory {
             val view = ImageView(this@MainActivity)
-            view.scaleType = ImageView.ScaleType.CENTER_INSIDE
-
-    //            view.layoutParams = ImageSwitcher.LayoutParams(
-    //                ViewGroup.LayoutParams.MATCH_PARENT,
-    //                ViewGroup.LayoutParams.MATCH_PARENT
-    //            )
+            view.scaleType = ImageView.ScaleType.FIT_XY
             view
         }
 
-        mImageSwitcher?.setImageResource(mImages[mCurrentPosition])
+        // Default picture
+        mImageSwitcher?.setImageResource(items[mCurrentPosition].drawable)
+        descritpion.text = items[mCurrentPosition].description
+        item_title.text = items[mCurrentPosition].title
         mGestureDetector = GestureDetector(this, SwipeListener())
         mImageSwitcher?.setOnTouchListener { _, event ->
             mGestureDetector?.onTouchEvent(event)
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             mOverscrollLeft?.startAnimation(mOverscrollLeftFadeOut)
             return
         }
-        if (nextImagePos >= mImages.size) {
+        if (nextImagePos >= items.size) {
             mOverscrollRight?.visibility = View.VISIBLE
             mOverscrollRight?.startAnimation(mOverscrollRightFadeOut)
             return
@@ -110,7 +110,9 @@ class MainActivity : AppCompatActivity() {
         mImageSwitcher?.outAnimation = if (delta > 0) mSlideOutLeft else mSlideOutRight
 
         mCurrentPosition = nextImagePos
-        mImageSwitcher?.setImageResource(mImages[mCurrentPosition])
+        mImageSwitcher?.setImageResource(items[mCurrentPosition].drawable)
+        descritpion.text = items[mCurrentPosition].description
+        item_title.text = items[mCurrentPosition].title
     }
 
     private inner class SwipeListener : GestureDetector.SimpleOnGestureListener() {
