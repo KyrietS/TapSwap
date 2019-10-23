@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Wprowadzanie do algorytmów, Cormen"
+                android:text="Krótki tytuł przedmiotu do oddania"
                 android:textColor="@color/colorTitle"
                 android:textSize="36sp"
                 android:textStyle="bold"
@@ -44,7 +44,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="Ciekawa fabuła, połączenie tragedii i dramatu. Szczerze polecam :-)"
+                android:text="Bardziej szczegółowy opis przedmiotu do oddania. Elementy zachęcające innych użytkowników do wzięcia przedmiotu. Dobry opis, to klucz do sukcesu udanej wymiany."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/item_title" />

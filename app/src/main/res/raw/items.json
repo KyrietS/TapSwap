@@ -1,0 +1,22 @@
+[
+  {
+    "drawable": "book",
+    "title": "Wprowadzenie do algorytmów, Cormen",
+    "description": "Ciekawa fabuła, połączenie komedii i dramatu. Szczerze polecam :)"
+  },
+  {
+    "drawable": "knife",
+    "title": "Nóż kuchenny",
+    "description": "stan: dobry. Nie posłużył do morderstwa"
+  },
+  {
+    "drawable": "pistol",
+    "title": "Pistolet na wodę",
+    "description": "Wygląda jak prawdziwy"
+  },
+  {
+    "drawable": "watch",
+    "title": "Zegarek",
+    "description": "Pusty w środku. Kupiony od cygana na stacji benzynowej xD"
+  }
+]
