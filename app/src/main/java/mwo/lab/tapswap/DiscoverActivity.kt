@@ -11,10 +11,10 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageSwitcher
 import android.widget.ImageView
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_discover.*
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity() {
+class DiscoverActivity : AppCompatActivity() {
 
     // Views
     private lateinit var imageSwitcher: ImageSwitcher
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_discover)
 
         // Read mockup items from raw JSON file using GSON
         val json: String = resources.openRawResource(R.raw.items).readBytes().toString(Charsets.UTF_8)
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         // ImageSwitcher
         imageSwitcher.setFactory {
-            val view = ImageView(this@MainActivity)
+            val view = ImageView(this@DiscoverActivity)
             view.scaleType = ImageView.ScaleType.FIT_XY
             view
         }

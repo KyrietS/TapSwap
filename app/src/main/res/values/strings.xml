@@ -4,4 +4,5 @@
     <string name="mock_item_description">Bardziej szczegółowy opis przedmiotu do oddania. Elementy zachęcające innych użytkowników do wzięcia przedmiotu. Dobry opis, to klucz do sukcesu udanej wymiany.</string>
     <string name="reject">Odrzuć</string>
     <string name="want">Chcę</string>
+    <string name="add_item">Dodaj przedmiot</string>
 </resources>
