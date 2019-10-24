@@ -5,4 +5,10 @@
     <color name="colorAccent">#D81B60</color>
     <color name="overscroll">#33b5e5</color>
     <color name="colorTitle">#000000</color>
+
+    <color name="colorOther">#636363</color>
+    <color name="fontDark">#3E3E3E</color>
+    <color name="fontLight">#7C7C7C</color>
+
+    <color name="buttonIcon">#10b515</color>
 </resources>
