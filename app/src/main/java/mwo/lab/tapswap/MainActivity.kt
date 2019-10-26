@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun myItemsOnClick(v: View) {
-        val intent = Intent(this, MyItems::class.java)
+        val intent = Intent(this, MyItemsActivity::class.java)
         startActivity(intent)
     }
 }

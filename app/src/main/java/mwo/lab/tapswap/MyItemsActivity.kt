@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import com.google.gson.Gson
 import java.util.*
 
-class MyItems : AppCompatActivity() {
+class MyItemsActivity : AppCompatActivity() {
 
     private val items = ArrayList<Item>()
 
