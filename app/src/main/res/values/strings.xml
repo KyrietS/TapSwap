@@ -5,4 +5,7 @@
     <string name="reject">Odrzuć</string>
     <string name="want">Chcę</string>
     <string name="add_item">Dodaj przedmiot</string>
+    <string name="edit">Edytuj</string>
+    <string name="remove">Usuń</string>
+    <string name="show_popup_menu">Wyświetl menu podręczne</string>
 </resources>
