@@ -1,6 +1,7 @@
 package mwo.lab.tapswap
 
 import android.app.Activity
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -60,7 +61,9 @@ class MyItemsAdapter(
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.edit -> {
-                    Toast.makeText(context, "TODO: Edit item activity", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "TODO: Fill fields with data", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(context, AddItemActivity::class.java)
+                    context.startActivity(intent)
                 }
                 R.id.remove -> {
                     Toast.makeText(context, "TODO: Remove item confirmation", Toast.LENGTH_SHORT).show()
