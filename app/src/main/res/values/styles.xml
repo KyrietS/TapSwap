@@ -9,4 +9,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--Style for Splash Screen-->
+    <style name="LaunchScreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name ="android:windowBackground"> @drawable/launch_screen_background</item>
+    </style>
+
 </resources>
