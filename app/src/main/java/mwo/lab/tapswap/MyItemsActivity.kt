@@ -1,10 +1,12 @@
 package mwo.lab.tapswap
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Button
 import com.google.gson.Gson
 import java.util.*
 
@@ -18,6 +20,7 @@ class MyItemsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_items)
 
         val recyclerView = findViewById<RecyclerView>( R.id.items_recycler )
+
 
         // for optimisation of recyclerView
         recyclerView.setHasFixedSize(true)
@@ -35,5 +38,11 @@ class MyItemsActivity : AppCompatActivity() {
 
         val myAdapter = MyItemsAdapter(this, items)
         recyclerView.adapter = myAdapter
+
+        val addButton = findViewById<Button>(R.id.addButton)
+        addButton.setOnClickListener {
+            val intent = Intent(this, AddItemActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
