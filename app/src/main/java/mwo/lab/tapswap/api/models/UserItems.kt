@@ -1,4 +1,4 @@
-package mwo.lab.tapswap.api.model
+package mwo.lab.tapswap.api.models
 
 data class UserItems (
     var success: Boolean?,

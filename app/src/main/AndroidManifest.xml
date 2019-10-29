@@ -12,21 +12,21 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".LaunchScreenActivity" android:theme="@style/LaunchScreenTheme">
+        <activity android:name=".activities.LaunchScreenActivity" android:theme="@style/LaunchScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".DashboardActivity"></activity>
+        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.DashboardActivity"></activity>
 
-        <activity android:name=".MyItemsActivity"></activity>
-        <activity android:name=".DiscoverActivity"></activity>
-        <activity android:name=".AddItemActivity"></activity>
-        <activity android:name=".MyAccountActivity"></activity>
-        <activity android:name=".WhateverActivity"></activity>
-        <activity android:name=".MySwapsActivity"></activity>
+        <activity android:name=".activities.MyItemsActivity"></activity>
+        <activity android:name=".activities.DiscoverActivity"></activity>
+        <activity android:name=".activities.AddItemActivity"></activity>
+        <activity android:name=".activities.MyAccountActivity"></activity>
+        <activity android:name=".activities.WhateverActivity"></activity>
+        <activity android:name=".activities.MySwapsActivity"></activity>
 
     </application>
 

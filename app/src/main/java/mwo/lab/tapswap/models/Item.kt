@@ -1,4 +1,4 @@
-package mwo.lab.tapswap
+package mwo.lab.tapswap.models
 
 data class Item(
     val drawable: String,

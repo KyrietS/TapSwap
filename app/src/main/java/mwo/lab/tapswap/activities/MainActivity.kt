@@ -1,9 +1,10 @@
-package mwo.lab.tapswap
+package mwo.lab.tapswap.activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import mwo.lab.tapswap.R
 
 class MainActivity : AppCompatActivity() {
 

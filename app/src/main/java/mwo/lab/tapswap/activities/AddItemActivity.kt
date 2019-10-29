@@ -1,4 +1,4 @@
-package mwo.lab.tapswap
+package mwo.lab.tapswap.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -21,6 +21,7 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.view.View
 import android.widget.ImageView
+import mwo.lab.tapswap.R
 import java.io.File
 import java.lang.Exception
 import java.text.SimpleDateFormat
