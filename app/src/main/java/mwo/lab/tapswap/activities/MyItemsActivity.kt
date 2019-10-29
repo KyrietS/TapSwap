@@ -1,4 +1,4 @@
-package mwo.lab.tapswap
+package mwo.lab.tapswap.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,12 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Button
 import com.google.gson.Gson
+import mwo.lab.tapswap.models.Item
+import mwo.lab.tapswap.adapters.MyItemsAdapter
+import mwo.lab.tapswap.R
 import mwo.lab.tapswap.api.Endpoints
 import mwo.lab.tapswap.api.APIService
-import mwo.lab.tapswap.api.model.UserItems
+import mwo.lab.tapswap.api.models.UserItems
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +48,7 @@ class MyItemsActivity : AppCompatActivity() {
             }
         })
 
-        val recyclerView = findViewById<RecyclerView>( R.id.items_recycler )
+        val recyclerView = findViewById<RecyclerView>(R.id.items_recycler)
 
 
         // for optimisation of recyclerView

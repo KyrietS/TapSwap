@@ -1,4 +1,4 @@
-package mwo.lab.tapswap
+package mwo.lab.tapswap.adapters
 
 import android.app.Activity
 import android.content.Intent
@@ -10,6 +10,9 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import mwo.lab.tapswap.R
+import mwo.lab.tapswap.activities.AddItemActivity
+import mwo.lab.tapswap.models.Item
 
 
 class MyItemsAdapter(

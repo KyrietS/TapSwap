@@ -1,8 +1,9 @@
-package mwo.lab.tapswap;
+package mwo.lab.tapswap.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import mwo.lab.tapswap.R
 
 public class LaunchScreenActivity : AppCompatActivity() {
 

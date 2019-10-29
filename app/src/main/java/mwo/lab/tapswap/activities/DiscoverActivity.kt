@@ -1,4 +1,4 @@
-package mwo.lab.tapswap
+package mwo.lab.tapswap.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,6 +12,8 @@ import android.widget.ImageSwitcher
 import android.widget.ImageView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_discover.*
+import mwo.lab.tapswap.models.Item
+import mwo.lab.tapswap.R
 import kotlin.math.abs
 
 class DiscoverActivity : AppCompatActivity() {
