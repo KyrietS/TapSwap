@@ -12,17 +12,23 @@
 
         <Button
                 android:id="@+id/button1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:onClick="discoverOnClick"
-                android:paddingLeft="50dp"
 
-                android:text="Discover View" />
+                android:background="@drawable/knife"
+                android:backgroundTint="#9FFFFFFF"
+                android:backgroundTintMode="src_atop"
+                android:fontFamily="@font/comfortaa_light"
+                android:onClick="discoverOnClick"
+                android:paddingLeft="5dp"
+                android:text="Discover View"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <Button
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:onClick="myItemsOnClick"
@@ -39,7 +45,7 @@
 
         <Button
                 android:id="@+id/button3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:onClick="myAccountOnClick"
@@ -49,11 +55,12 @@
 
         <Button
                 android:id="@+id/button4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:onClick="addItemOnClick"
+                android:backgroundTint="#5FFFFFFF"
 
+                android:onClick="addItemOnClick"
                 android:text="Add Item View" />
     </LinearLayout>
     <LinearLayout
@@ -64,7 +71,7 @@
 
         <Button
                 android:id="@+id/button5"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:onClick="mySwapsOnClick"
@@ -74,7 +81,7 @@
 
         <Button
                 android:id="@+id/button6"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:onClick="whateverOnClick"
