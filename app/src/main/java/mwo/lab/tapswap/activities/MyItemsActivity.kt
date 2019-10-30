@@ -6,47 +6,20 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.widget.Button
 import com.google.gson.Gson
-import mwo.lab.tapswap.models.Item
-import mwo.lab.tapswap.adapters.MyItemsAdapter
 import mwo.lab.tapswap.R
-import mwo.lab.tapswap.api.Endpoints
-import mwo.lab.tapswap.api.APIService
-import mwo.lab.tapswap.api.models.UserItems
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import mwo.lab.tapswap.adapters.MyItemsAdapter
+import mwo.lab.tapswap.models.Item
 import java.util.*
 
 class MyItemsActivity : AppCompatActivity() {
 
     private val items = ArrayList<Item>()
 
-    private lateinit var api: Endpoints
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_items)
-
-        // TODO chyba nie wysyła tokenu
-        api = APIService.create()
-
-        val call = api.getUserItems()
-        call.enqueue( object : Callback<UserItems> {
-            override fun onResponse(call: Call<UserItems>, response: Response<UserItems>) {
-
-                Log.d("omg", call.request().headers().toString())
-                val body = response.body()!!
-                Log.d("omg", "RESPONSE")
-                Log.d("omg", body.toString())
-            }
-
-            override fun onFailure(call: Call<UserItems>, t: Throwable) {
-                Log.d("omg", "FAILURE")
-            }
-        })
 
         val recyclerView = findViewById<RecyclerView>(R.id.items_recycler)
 
@@ -65,7 +38,7 @@ class MyItemsActivity : AppCompatActivity() {
         val gson = Gson()
         items.addAll(gson.fromJson(json, Array<Item>::class.java))
 
-        val myAdapter = MyItemsAdapter(this, items)
+        val myAdapter = MyItemsAdapter(this)
         recyclerView.adapter = myAdapter
 
         val addButton = findViewById<Button>(R.id.addButton)

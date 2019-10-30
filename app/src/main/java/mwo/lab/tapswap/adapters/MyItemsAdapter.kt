@@ -3,22 +3,50 @@ package mwo.lab.tapswap.adapters
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import mwo.lab.tapswap.R
 import mwo.lab.tapswap.activities.AddItemActivity
-import mwo.lab.tapswap.models.Item
+import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.api.models.UserItems
+import mwo.lab.tapswap.views.LoadingView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MyItemsAdapter(
-    private val context: Activity,
-    private val items: ArrayList<Item>
+    private val context: Activity
 ) : RecyclerView.Adapter<MyItemsAdapter.ItemHolder>()  {
+
+    var items = listOf<UserItems.Item>()
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        // Sending request for all my items
+        val api = APIService.create()
+        val call = api.getUserItems()
+
+        // Show loading circle
+        val loading = context.findViewById<LoadingView>(R.id.loading)!!
+        loading.begin()
+        call.enqueue( object : Callback<UserItems>{
+            override fun onResponse(call: Call<UserItems>, response: Response<UserItems>) {
+                if(response.isSuccessful) {
+                    items = response.body()?.data ?: listOf()
+                    notifyDataSetChanged()
+                    loading.finish()
+                }
+            }
+            override fun onFailure(call: Call<UserItems>, t: Throwable) {
+                loading.finish()
+                Toast.makeText(context, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
 
     // Implementation ViewHolder pattern
     // every object of this class has it's own reference to the layout element
@@ -45,7 +73,7 @@ class MyItemsAdapter(
     override fun onBindViewHolder(viewHolder: ItemHolder, i: Int) {
         // fill item layout
         val item = items[i]
-        viewHolder.itemTitle.text = item.title
+        viewHolder.itemTitle.text = item.name
         viewHolder.itemDescription.text = item.description
 
         viewHolder.itemPopupMenu.setOnClickListener {
