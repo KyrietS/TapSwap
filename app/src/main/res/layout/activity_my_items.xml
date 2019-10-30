@@ -46,4 +46,11 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"/>
 
+    <mwo.lab.tapswap.views.LoadingView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
 </android.support.constraint.ConstraintLayout>
+
