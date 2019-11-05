@@ -3,27 +3,35 @@ package mwo.lab.tapswap.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.text.InputType
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import android.support.v7.app.AppCompatActivity
+import android.text.InputType
+import android.util.Log
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import mwo.lab.tapswap.R
+import mwo.lab.tapswap.api.APIService
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
-import java.lang.Exception
+import java.io.OutputStreamWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,13 +73,39 @@ class AddItemActivity : AppCompatActivity() {
                 Toast.makeText(this, "TODO: discard changes", Toast.LENGTH_SHORT).show()
             }
             R.id.icon_done -> {
-                Toast.makeText(this, "TODO: send item", Toast.LENGTH_SHORT).show()
+                sendItem()
+//                Toast.makeText(this, "TODO: send item", Toast.LENGTH_SHORT).show()
             }
             else -> {
                 return false
             }
         }
         return true
+    }
+
+    private fun sendItem() {
+        val fOut = openFileOutput("test.txt", MODE_PRIVATE)
+        val osw = OutputStreamWriter(fOut)
+        osw.write("Ala ma kota - z ANDROIDA")
+        osw.flush()
+        osw.close()
+
+        val file = File("$filesDir/test.txt")
+
+//        val rbody = MultipartBody.Part.create(MediaType.parse("image/*"), file)
+        val rbody = RequestBody.create(MediaType.parse("text/plain"), file)
+        val fbody = MultipartBody.Part.createFormData("photo", file.name, rbody)
+        val api = APIService.create()
+        val call = api.addItem(fbody)
+        Log.d("omg", "Wysyłam...")
+        call.enqueue( object : Callback<Any> {
+            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                Log.d("omg", response.body()!!.toString())
+            }
+            override fun onFailure(call: Call<Any>, t: Throwable) {
+                Toast.makeText(this@AddItemActivity, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

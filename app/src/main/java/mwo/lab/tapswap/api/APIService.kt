@@ -16,7 +16,7 @@ object APIService {
                 val request = chain
                     .request()
                     .newBuilder()
-                    .addHeader("User-Token", Token.userToken)
+                    .addHeader("authorization", "Bearer ${Token.userToken}")
                     .build()
                 chain.proceed(request)
             }
