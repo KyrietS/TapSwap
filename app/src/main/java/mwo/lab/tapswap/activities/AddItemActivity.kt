@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -31,7 +32,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.io.OutputStreamWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -74,7 +74,6 @@ class AddItemActivity : AppCompatActivity() {
             }
             R.id.icon_done -> {
                 sendItem()
-//                Toast.makeText(this, "TODO: send item", Toast.LENGTH_SHORT).show()
             }
             else -> {
                 return false
@@ -84,23 +83,16 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun sendItem() {
-        val fOut = openFileOutput("test.txt", MODE_PRIVATE)
-        val osw = OutputStreamWriter(fOut)
-        osw.write("Ala ma kota - z ANDROIDA")
-        osw.flush()
-        osw.close()
+        //TODO: pobierać nazwy z GUI
+        val file = File(currentPhotoPath)
 
-        val file = File("$filesDir/test.txt")
-
-//        val rbody = MultipartBody.Part.create(MediaType.parse("image/*"), file)
-        val rbody = RequestBody.create(MediaType.parse("text/plain"), file)
-        val fbody = MultipartBody.Part.createFormData("photo", file.name, rbody)
+        val reqBody = RequestBody.create(MediaType.parse("image/*"), file)
+        val bodyPart = MultipartBody.Part.createFormData("photo", file.name, reqBody)
         val api = APIService.create()
-        val call = api.addItem(fbody)
-        Log.d("omg", "Wysyłam...")
+        val call = api.addItem(bodyPart, "ANDROID", "opis", "kategoria", "cena")
         call.enqueue( object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                Log.d("omg", response.body()!!.toString())
+
             }
             override fun onFailure(call: Call<Any>, t: Throwable) {
                 Toast.makeText(this@AddItemActivity, "Connection error", Toast.LENGTH_SHORT).show()
@@ -112,8 +104,10 @@ class AddItemActivity : AppCompatActivity() {
         val itemImage = findViewById<ImageView>(R.id.item_image)
 
         if( requestCode == REQUEST_GALLERY_CODE && resultCode == Activity.RESULT_OK ) {
-            val selectedImage = data?.data
-            itemImage.setImageURI(selectedImage)
+            val selectedImageUri = data?.data
+            currentPhotoPath = getPath(this, selectedImageUri!!)
+            Log.d("omg", currentPhotoPath)
+            itemImage.setImageURI(selectedImageUri)
             // TODO: Retrieve absolute path to the image (not only a thumbnail from 'data')
         }
         if( requestCode == REQUEST_CAMERA_CODE && resultCode == Activity.RESULT_OK ) {
@@ -122,6 +116,24 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
+    private fun getPath(context: Context, uri: Uri): String {
+        var result = ""
+        val projection = arrayOf( MediaStore.Images.Media.DATA )
+        val cursor: Cursor? = context.contentResolver.query( uri, projection, null, null, null );
+        if(cursor != null){
+            if ( cursor.moveToFirst( ) ) {
+                val index: Int = cursor.getColumnIndexOrThrow( projection[0] )
+                result = cursor.getString( index )
+            }
+            cursor.close()
+        }
+        if(result.isEmpty()) {
+            result = "Not found"
+        }
+        return result
+    }
+
+    //TODO: Opcja wyboru zdjęcia z galerii lu aparatu
     @Suppress("UNUSED_PARAMETER")
     fun pickFromGallery( v: View ) {
         //Create an Intent with action as ACTION_PICK
@@ -132,20 +144,22 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     // Send request to camera app for taking a photo
-    private fun takePhoto() {
+    @Suppress("UNUSED_PARAMETER")
+    fun takePhoto(v: View ) {
         val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if( pictureIntent.resolveActivity(packageManager) != null ) {
-            var photoFile: File?
+            val photoFile: File?
             try {
                 photoFile = createImageFile()
             } catch( e: Exception) {
                 Toast.makeText(this, "Nie można utworzyć pliku", Toast.LENGTH_SHORT).show()
                 return
             }
-//            val photoURI: Uri = Uri.fromFile( photoFile )
-            val photoURI: Uri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile)
+            val photoURI: Uri = FileProvider.getUriForFile(this, "mwo.lab.tapswap.fileprovider", photoFile)
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             startActivityForResult(pictureIntent, REQUEST_CAMERA_CODE)
+
+
         }
     }
 
