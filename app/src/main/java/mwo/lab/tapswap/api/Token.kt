@@ -1,5 +1,5 @@
 package mwo.lab.tapswap.api
 
 object Token {
-    var userToken: String = "123456789"
+    var userToken: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsIm5hbWUiOiJDemFyZWsiLCJlbWFpbCI6ImFsZUBlbWFpbC5jb20iLCJwaG9uZSI6IjEyMzEyMzEyMyIsImlhdCI6MTU3Mjk0Nzc5NX0.Dm31R_Fsf1SHSe65QSvflMEvVa_uz_rJNW1XwL7X7UM"
 }
