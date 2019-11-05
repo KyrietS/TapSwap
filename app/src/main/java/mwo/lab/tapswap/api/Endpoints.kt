@@ -13,7 +13,13 @@ interface Endpoints {
 
     @Multipart
     @POST("/items/add")
-    fun addItem(@Part file: MultipartBody.Part) : Call<Any>
+    fun addItem(@Part file: MultipartBody.Part,
+                @Part("name") name: String,
+                @Part("description") desc: String,
+                @Part("priceCategory") priceCat: String,
+                @Part("category") category: String)
+            : Call<Any>
+
 
     @POST("/test")
     fun test() : Call<Request>

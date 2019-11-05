@@ -103,8 +103,8 @@
                         android:id="@+id/button"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
-                        android:stateListAnimator="@null"
-                        android:onClick="pickFromGallery"/>
+                        android:onClick="takePhoto"
+                        android:stateListAnimator="@null" />
 
                 <ImageView
                         android:id="@+id/item_image"
