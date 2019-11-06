@@ -103,7 +103,7 @@
                         android:id="@+id/button"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
-                        android:onClick="takePhoto"
+                        android:onClick="addImage"
                         android:stateListAnimator="@null" />
 
                 <ImageView
