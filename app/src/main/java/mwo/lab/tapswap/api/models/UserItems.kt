@@ -6,11 +6,12 @@ data class UserItems (
     var data: List<Item>?
 ) {
     data class Item (
-        var itemId: String?,
-        var name: String?,
-        var description: String?,
-        var photoUrl: String?,
-        var priceCategory: String?,
-        var category: String?
+        var id: String?,
+        var itemName: String?,
+        var itemDescription: String?,
+        var itemPhoto: String?,
+        var itemPriceCategory: String?,
+        var itemCategory: String?,
+        var itemStatus: String?
     )
 }
