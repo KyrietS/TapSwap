@@ -6,7 +6,7 @@ data class UserItems (
     var data: List<Item>?
 ) {
     data class Item (
-        var id: String?,
+        var id: Int,
         var itemName: String?,
         var itemDescription: String?,
         var itemPhoto: String?,

@@ -1,6 +1,7 @@
 package mwo.lab.tapswap.api
 
 import mwo.lab.tapswap.api.models.Request
+import mwo.lab.tapswap.api.models.RequestResult
 import mwo.lab.tapswap.api.models.UserItems
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -18,8 +19,11 @@ interface Endpoints {
                 @Part("description") desc: String,
                 @Part("priceCategory") priceCat: String,
                 @Part("category") category: String)
-            : Call<Any>
+            : Call<RequestResult>
 
+    @FormUrlEncoded
+    @POST("/items/delete")
+    fun deleteItem(@Field("itemId") id: Int) : Call<RequestResult>
 
     @POST("/test")
     fun test() : Call<Request>

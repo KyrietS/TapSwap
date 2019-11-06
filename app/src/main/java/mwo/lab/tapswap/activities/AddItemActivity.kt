@@ -30,6 +30,7 @@ import android.widget.TextView
 import android.widget.Toast
 import mwo.lab.tapswap.R
 import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.api.models.RequestResult
 import mwo.lab.tapswap.views.LoadingView
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -100,14 +101,18 @@ class AddItemActivity : AppCompatActivity() {
         val call = api.addItem(bodyPart, name, desc, "kategoria", "cena")
         val loading = findViewById<LoadingView>(R.id.loading)!!
         loading.begin()
-        call.enqueue( object : Callback<Any> {
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+        call.enqueue( object : Callback<RequestResult> {
+            override fun onResponse(call: Call<RequestResult>, response: Response<RequestResult>) {
                 loading.finish()
-                Toast.makeText(this@AddItemActivity, "Dodano przedmiot", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@AddItemActivity, MyItemsActivity::class.java)
-                startActivity(intent)
+                if(response.isSuccessful && response.body()!!.success) {
+                    Toast.makeText(this@AddItemActivity, "Dodano przedmiot", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@AddItemActivity, MyItemsActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    onFailure(call, Throwable(response.body()!!.errors.toString()))
+                }
             }
-            override fun onFailure(call: Call<Any>, t: Throwable) {
+            override fun onFailure(call: Call<RequestResult>, t: Throwable) {
                 Log.d("omg", t.message)
                 loading.finish()
                 Toast.makeText(this@AddItemActivity, "Connection error", Toast.LENGTH_SHORT).show()
