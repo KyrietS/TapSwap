@@ -3,11 +3,13 @@ package mwo.lab.tapswap.adapters
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
 import mwo.lab.tapswap.R
 import mwo.lab.tapswap.activities.AddItemActivity
 import mwo.lab.tapswap.api.APIService
@@ -73,8 +75,8 @@ class MyItemsAdapter(
     override fun onBindViewHolder(viewHolder: ItemHolder, i: Int) {
         // fill item layout
         val item = items[i]
-        viewHolder.itemTitle.text = item.name
-        viewHolder.itemDescription.text = item.description
+        viewHolder.itemTitle.text = item.itemName
+        viewHolder.itemDescription.text = item.itemDescription
 
         viewHolder.itemPopupMenu.setOnClickListener {
             showPopupMenu(viewHolder.itemPopupMenu, i)
