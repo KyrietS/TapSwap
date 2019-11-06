@@ -3,6 +3,7 @@ package mwo.lab.tapswap.api
 import mwo.lab.tapswap.api.models.Request
 import mwo.lab.tapswap.api.models.UserItems
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,11 +15,12 @@ interface Endpoints {
     @Multipart
     @POST("/items/add")
     fun addItem(@Part file: MultipartBody.Part,
-                @Part("name") name: String,
-                @Part("description") desc: String,
-                @Part("priceCategory") priceCat: String,
-                @Part("category") category: String)
+                @Part("name") name: RequestBody,
+                @Part("description") desc: RequestBody,
+                @Part("priceCategory") priceCat: RequestBody,
+                @Part("category") category: RequestBody)
             : Call<Any>
+
 
 
     @POST("/test")
