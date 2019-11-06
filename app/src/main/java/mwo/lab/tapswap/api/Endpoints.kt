@@ -20,7 +20,7 @@ interface Endpoints {
                 @Part("description") desc: RequestBody,
                 @Part("priceCategory") priceCat: RequestBody,
                 @Part("category") category: RequestBody)
-            : Call<Any>
+            : Call<RequestResult>
 
     @FormUrlEncoded
     @POST("/items/delete")
