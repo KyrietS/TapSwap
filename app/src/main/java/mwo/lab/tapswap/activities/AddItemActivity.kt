@@ -2,6 +2,7 @@ package mwo.lab.tapswap.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -12,7 +13,6 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
-import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -37,6 +37,7 @@ import java.util.*
 
 private const val REQUEST_GALLERY_CODE = 1
 private const val REQUEST_CAMERA_CODE = 2
+private const val FILEPROVIDER_AUTHORITY = "mwo.lab.tapswap.fileprovider"
 
 class AddItemActivity : AppCompatActivity() {
 
@@ -83,13 +84,15 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun sendItem() {
-        //TODO: pobierać nazwy z GUI
         val file = File(currentPhotoPath)
-
         val reqBody = RequestBody.create(MediaType.parse("image/*"), file)
         val bodyPart = MultipartBody.Part.createFormData("photo", file.name, reqBody)
         val api = APIService.create()
-        val call = api.addItem(bodyPart, "ANDROID", "opis", "kategoria", "cena")
+
+        val name = findViewById<TextView>(R.id.title).text.toString()
+        val desc = findViewById<TextView>(R.id.description).text.toString()
+
+        val call = api.addItem(bodyPart, name, desc, "kategoria", "cena")
         call.enqueue( object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
 
@@ -106,20 +109,20 @@ class AddItemActivity : AppCompatActivity() {
         if( requestCode == REQUEST_GALLERY_CODE && resultCode == Activity.RESULT_OK ) {
             val selectedImageUri = data?.data
             currentPhotoPath = getPath(this, selectedImageUri!!)
-            Log.d("omg", currentPhotoPath)
             itemImage.setImageURI(selectedImageUri)
-            // TODO: Retrieve absolute path to the image (not only a thumbnail from 'data')
         }
         if( requestCode == REQUEST_CAMERA_CODE && resultCode == Activity.RESULT_OK ) {
-            // TODO obsługa kamery
             itemImage.setImageURI( Uri.fromFile(File(currentPhotoPath)) )
         }
     }
 
+    /**
+     * Gets absolute path to the resource under given uri.
+     */
     private fun getPath(context: Context, uri: Uri): String {
         var result = ""
         val projection = arrayOf( MediaStore.Images.Media.DATA )
-        val cursor: Cursor? = context.contentResolver.query( uri, projection, null, null, null );
+        val cursor: Cursor? = context.contentResolver.query( uri, projection, null, null, null )
         if(cursor != null){
             if ( cursor.moveToFirst( ) ) {
                 val index: Int = cursor.getColumnIndexOrThrow( projection[0] )
@@ -133,9 +136,20 @@ class AddItemActivity : AppCompatActivity() {
         return result
     }
 
-    //TODO: Opcja wyboru zdjęcia z galerii lu aparatu
     @Suppress("UNUSED_PARAMETER")
-    fun pickFromGallery( v: View ) {
+    fun addImage(v: View) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Wybierz zdjęcie...")
+        builder.setItems(arrayOf("Galeria", "Aparat")) { _, which ->
+            when (which) {
+                0 -> pickFromGallery()
+                1 -> pickFromCamera()
+            }
+        }
+        builder.show()
+    }
+
+    private fun pickFromGallery() {
         //Create an Intent with action as ACTION_PICK
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/jpeg"
@@ -143,9 +157,10 @@ class AddItemActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_GALLERY_CODE)
     }
 
-    // Send request to camera app for taking a photo
-    @Suppress("UNUSED_PARAMETER")
-    fun takePhoto(v: View ) {
+    /**
+     * Send request to camera app for taking a photo
+     */
+    private fun pickFromCamera() {
         val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if( pictureIntent.resolveActivity(packageManager) != null ) {
             val photoFile: File?
@@ -155,19 +170,19 @@ class AddItemActivity : AppCompatActivity() {
                 Toast.makeText(this, "Nie można utworzyć pliku", Toast.LENGTH_SHORT).show()
                 return
             }
-            val photoURI: Uri = FileProvider.getUriForFile(this, "mwo.lab.tapswap.fileprovider", photoFile)
+            val photoURI: Uri = FileProvider.getUriForFile(this, FILEPROVIDER_AUTHORITY, photoFile)
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             startActivityForResult(pictureIntent, REQUEST_CAMERA_CODE)
-
-
         }
     }
 
-    // Create temp file for image
+    /**
+     * Create temp file for an image
+     */
     @SuppressLint("SimpleDateFormat")
     fun createImageFile(): File {
-//        val storageDir: File = cacheDir
         // Create an image file name
+        @Suppress("SpellCheckingInspection")
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile("img_$timeStamp", ".jpg", storageDir)
