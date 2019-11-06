@@ -1,6 +1,7 @@
 package mwo.lab.tapswap.adapters
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import android.widget.Toast
 import mwo.lab.tapswap.R
 import mwo.lab.tapswap.activities.AddItemActivity
 import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.api.models.RequestResult
 import mwo.lab.tapswap.api.models.UserItems
 import mwo.lab.tapswap.views.LoadingView
 import retrofit2.Call
@@ -27,6 +29,10 @@ class MyItemsAdapter(
     var items = listOf<UserItems.Item>()
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        fetchData()
+    }
+
+    fun fetchData() {
         // Sending request for all my items
         val api = APIService.create()
         val call = api.getUserItems()
@@ -47,7 +53,6 @@ class MyItemsAdapter(
                 Toast.makeText(context, "Connection error", Toast.LENGTH_SHORT).show()
             }
         })
-
     }
 
     // Implementation ViewHolder pattern
@@ -93,18 +98,44 @@ class MyItemsAdapter(
         // actions for menu buttons
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.edit -> {
+                R.id.preview -> {
                     Toast.makeText(context, "TODO: Fill fields with data", Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, AddItemActivity::class.java)
                     context.startActivity(intent)
                 }
                 R.id.remove -> {
-                    Toast.makeText(context, "TODO: Remove item confirmation", Toast.LENGTH_SHORT).show()
+                    AlertDialog.Builder(context)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Usuwanie przedmiotu")
+                        .setMessage("Czy na pewno chcesz usunąć ten przedmiot?")
+                        .setPositiveButton("Tak") { _, _ ->
+                            deleteItem(items[position])
+                        }
+                        .setNegativeButton("Nie", null)
+                        .show()
                 }
             }
             true
         }
         popup.show()
+    }
+
+    private fun deleteItem(item: UserItems.Item) {
+        val api = APIService.create()
+        val call = api.deleteItem(item.id)
+        val loading = context.findViewById<LoadingView>(R.id.loading)!!
+        loading.begin()
+        call.enqueue(object :Callback<RequestResult> {
+            override fun onResponse( call: Call<RequestResult>, response: Response<RequestResult>) {
+                loading.finish()
+                Toast.makeText(context, "Usunięto przedmiot z konta", Toast.LENGTH_SHORT).show()
+                fetchData()
+            }
+            override fun onFailure(call: Call<RequestResult>, t: Throwable) {
+                loading.finish()
+                Toast.makeText(context, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 }
