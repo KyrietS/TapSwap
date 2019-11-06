@@ -90,14 +90,19 @@ class AddItemActivity : AppCompatActivity() {
 
     private fun sendItem() {
         val file = File(currentPhotoPath)
-        val reqBody = RequestBody.create(MediaType.parse("image/*"), file)
-        val bodyPart = MultipartBody.Part.createFormData("photo", file.name, reqBody)
-        val api = APIService.create()
-
         val name = findViewById<TextView>(R.id.title).text.toString()
         val desc = findViewById<TextView>(R.id.description).text.toString()
 
-        val call = api.addItem(bodyPart, name, desc, "kategoria", "cena")
+        val imageBody = RequestBody.create(MediaType.parse("image/*"), file)
+        val imagePart = MultipartBody.Part.createFormData("photo", file.name, imageBody)
+        val nameBody = RequestBody.create(MediaType.parse("text/plain"), name)
+        val descBody = RequestBody.create(MediaType.parse("text/plain"), desc)
+        val catBody = RequestBody.create(MediaType.parse("text/plain"), "kategoria")
+        val priceBody = RequestBody.create(MediaType.parse("text/plain"), "cena")
+
+        val api = APIService.create()
+
+        val call = api.addItem(imagePart, nameBody, descBody, catBody, priceBody)
         val loading = findViewById<LoadingView>(R.id.loading)!!
         loading.begin()
         call.enqueue( object : Callback<Any> {
