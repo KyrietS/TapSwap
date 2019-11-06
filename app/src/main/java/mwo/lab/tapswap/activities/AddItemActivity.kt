@@ -1,18 +1,23 @@
 package mwo.lab.tapswap.activities
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
+import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -25,6 +30,7 @@ import android.widget.TextView
 import android.widget.Toast
 import mwo.lab.tapswap.R
 import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.views.LoadingView
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -32,11 +38,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 private const val REQUEST_GALLERY_CODE = 1
 private const val REQUEST_CAMERA_CODE = 2
+private const val REQUEST_PERMISSIONS_FOR_GALLERY = 3
 private const val FILEPROVIDER_AUTHORITY = "mwo.lab.tapswap.fileprovider"
 
 class AddItemActivity : AppCompatActivity() {
@@ -93,11 +98,18 @@ class AddItemActivity : AppCompatActivity() {
         val desc = findViewById<TextView>(R.id.description).text.toString()
 
         val call = api.addItem(bodyPart, name, desc, "kategoria", "cena")
+        val loading = findViewById<LoadingView>(R.id.loading)!!
+        loading.begin()
         call.enqueue( object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
-
+                loading.finish()
+                Toast.makeText(this@AddItemActivity, "Dodano przedmiot", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@AddItemActivity, MyItemsActivity::class.java)
+                startActivity(intent)
             }
             override fun onFailure(call: Call<Any>, t: Throwable) {
+                Log.d("omg", t.message)
+                loading.finish()
                 Toast.makeText(this@AddItemActivity, "Connection error", Toast.LENGTH_SHORT).show()
             }
         })
@@ -150,11 +162,18 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun pickFromGallery() {
-        //Create an Intent with action as ACTION_PICK
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/jpeg"
-        // Launching the Intent
-        startActivityForResult(intent, REQUEST_GALLERY_CODE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                REQUEST_PERMISSIONS_FOR_GALLERY)
+        } else {
+            //Create an Intent with action as ACTION_PICK
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/jpeg"
+            // Launching the Intent
+            startActivityForResult(intent, REQUEST_GALLERY_CODE)
+        }
     }
 
     /**
@@ -182,12 +201,22 @@ class AddItemActivity : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     fun createImageFile(): File {
         // Create an image file name
-        @Suppress("SpellCheckingInspection")
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile("img_$timeStamp", ".jpg", storageDir)
+        val image = File("$storageDir/item_image.jpg")
         currentPhotoPath = image.absolutePath
         return image
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        when(requestCode) {
+            REQUEST_PERMISSIONS_FOR_GALLERY -> {
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    pickFromGallery()
+                }
+            }
+        }
     }
 
     // Function that filters out any newline character.

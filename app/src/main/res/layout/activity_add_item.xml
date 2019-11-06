@@ -26,6 +26,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -152,5 +153,10 @@
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
+    <mwo.lab.tapswap.views.LoadingView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"/>
 
 </android.support.constraint.ConstraintLayout>
