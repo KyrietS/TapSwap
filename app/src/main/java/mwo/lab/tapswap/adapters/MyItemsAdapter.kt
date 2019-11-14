@@ -14,9 +14,8 @@ import android.widget.Toast
 import mwo.lab.tapswap.R
 import mwo.lab.tapswap.activities.AddItemActivity
 import mwo.lab.tapswap.api.APIService
-import mwo.lab.tapswap.api.models.RequestResult
-import mwo.lab.tapswap.api.models.UserItems
 import mwo.lab.tapswap.views.LoadingView
+import mwo.lab.tapswap.api.models.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +25,7 @@ class MyItemsAdapter(
     private val context: Activity
 ) : RecyclerView.Adapter<MyItemsAdapter.ItemHolder>()  {
 
-    var items = listOf<UserItems.Item>()
+    var items = listOf<Item>()
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         fetchData()
@@ -120,7 +119,7 @@ class MyItemsAdapter(
         popup.show()
     }
 
-    private fun deleteItem(item: UserItems.Item) {
+    private fun deleteItem(item: Item) {
         val api = APIService.create()
         val call = api.deleteItem(item.id)
         val loading = context.findViewById<LoadingView>(R.id.loading)!!

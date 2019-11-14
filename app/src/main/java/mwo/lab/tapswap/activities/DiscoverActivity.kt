@@ -10,10 +10,18 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageSwitcher
 import android.widget.ImageView
-import com.google.gson.Gson
+import android.widget.Toast
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_discover.*
-import mwo.lab.tapswap.models.Item
 import mwo.lab.tapswap.R
+import mwo.lab.tapswap.adapters.ImageSwitcherPicasso
+import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.api.models.DiscoverItems
+import mwo.lab.tapswap.api.models.Item
+import mwo.lab.tapswap.views.LoadingView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.math.abs
 
 class DiscoverActivity : AppCompatActivity() {
@@ -23,11 +31,12 @@ class DiscoverActivity : AppCompatActivity() {
     private lateinit var overscrollLeft: View
     private lateinit var overscrollRight: View
 
+    private lateinit var imageSwitcherPicasso: ImageSwitcherPicasso
     private lateinit var gestureDetector: GestureDetector
-    private var currentPosition = 0
 
     // Animations
     private var slideInLeft: Animation? = null
+
     private var slideOutRight: Animation? = null
     private var slideInRight: Animation? = null
     private var slideOutLeft: Animation? = null
@@ -35,22 +44,22 @@ class DiscoverActivity : AppCompatActivity() {
     private var overscrollRightFadeOut: Animation? = null
 
     // Mock items
-    private lateinit var items: Array<Item>
+    private val items = mutableListOf<Item>()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
 
-        // Read mockup items from raw JSON file using GSON
-        val json: String = resources.openRawResource(R.raw.items).readBytes().toString(Charsets.UTF_8)
-        val gson = Gson()
-        items = gson.fromJson(json, Array<Item>::class.java)
+        // Fetch items as soon as possible
+        fetchItems()
 
         // Views
         imageSwitcher = findViewById(R.id.image)
         overscrollLeft = findViewById(R.id.overscroll_left)
         overscrollRight = findViewById(R.id.overscroll_right)
+
+        imageSwitcherPicasso = ImageSwitcherPicasso(this, imageSwitcher)
 
         // Animations
         slideInLeft = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
@@ -73,37 +82,120 @@ class DiscoverActivity : AppCompatActivity() {
             gestureDetector.onTouchEvent(event)
             true
         }
+    }
 
-        // Default picture
-        moveNextOrPrevious(0)
+    /**
+     * Fetches list of items and puts them into the list
+     * (this list is used like a queue tbh)
+     */
+    private fun fetchItems() {
+        // Sending request for all my items
+        val api = APIService.create()
+        val call = api.getRandItem()
+        val numOfItems = items.size
+
+        // Show loading circle
+        val loading = findViewById<LoadingView>(R.id.loading)!!
+        // For first fetching show loading circle
+        if(numOfItems == 0)
+            loading.begin()
+        call.enqueue( object : Callback<DiscoverItems> {
+            override fun onResponse(call: Call<DiscoverItems>, response: Response<DiscoverItems>) {
+                if(response.isSuccessful && response.body() != null) {
+                    // Add new items to the end of the list
+                    val data = response.body()?.data ?: listOf()
+                    items.addAll(data)
+
+                    // Load new picture if there was no picture
+                    if(numOfItems == 0)
+                        moveNextOrPrevious(0)
+                }
+                loading.finish()
+            }
+            override fun onFailure(call: Call<DiscoverItems>, t: Throwable) {
+                loading.finish()
+                Toast.makeText(this@DiscoverActivity, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun moveNextOrPrevious(delta: Int) {
-        val nextImagePos = currentPosition + delta
 
-        // overscroll (no more photos) effect on the side on the screen
-        if (nextImagePos < 0) {
-            overscrollLeft.visibility = View.VISIBLE
-            overscrollLeft.startAnimation(overscrollLeftFadeOut)
-            return
-        }
-        if (nextImagePos >= items.size) {
-            overscrollRight.visibility = View.VISIBLE
-            overscrollRight.startAnimation(overscrollRightFadeOut)
-            return
+        if(delta>0) setupAnimations(Direction.RIGHT)
+        if(delta<0) setupAnimations(Direction.LEFT)
+
+        // fetch new images to cache when it's close to the end
+        if(items.size < 3){
+            fetchItems()
         }
 
-        // Swipe animations
-        imageSwitcher.inAnimation = if (delta > 0) slideInRight else slideInLeft
-        imageSwitcher.outAnimation = if (delta > 0) slideOutLeft else slideOutRight
+        // TODO: akceptacja / odrzucanie przedmiotu
 
         // Displaying new image with it's data
-        currentPosition = nextImagePos
-        val res = resources.getIdentifier(items[currentPosition].drawable, "drawable", packageName)
-        imageSwitcher.setImageResource(res)
-        description.text = items[currentPosition].description
-        item_title.text = items[currentPosition].title
+        if (items.size > 0) {
+            val item = items[0]
+            // Add next images to cache
+            cacheItems(1..3)
+            displayItem(item)
+            // Remove item from list after displaying it
+            items.removeAt(0)
+        } // else wait for fetching new ones
     }
+
+    private fun cacheItems(range: IntRange) {
+        for(i in range) {
+            if(i < items.size) {
+                Picasso.get()
+                    .load(items[i].itemPhoto)
+                    .resize(imageSwitcher.width, imageSwitcher.height)
+                    .centerCrop()
+                    .fetch()
+            }
+        }
+    }
+
+    /**
+     * Shows item in the GUI
+     */
+    private fun displayItem(item: Item) {
+        // Fill data for new item
+        Picasso.get()
+            .load(item.itemPhoto!!)
+            .resize(imageSwitcher.width, imageSwitcher.height)
+            .centerCrop()
+            .into(imageSwitcherPicasso)
+        item_title.text = item.itemName
+        description.text = item.itemDescription
+    }
+
+    private fun setupAnimations(direction: Direction) {
+        // Swipe animations
+        imageSwitcher.inAnimation = when(direction) {
+            Direction.RIGHT -> slideInRight
+            Direction.LEFT -> slideInLeft
+        }
+        imageSwitcher.outAnimation = when(direction) {
+            Direction.RIGHT -> slideOutLeft
+            Direction.LEFT -> slideOutRight
+        }
+        // overscroll (no more photos) effect on the side on the screen
+        if(items.size <= 1) {
+            when(direction) {
+                Direction.RIGHT -> {
+                    overscrollRight.visibility = View.VISIBLE
+                    overscrollRight.startAnimation(overscrollRightFadeOut)
+                    return
+                }
+                Direction.LEFT -> {
+                    overscrollLeft.visibility = View.VISIBLE
+                    overscrollLeft.startAnimation(overscrollLeftFadeOut)
+                    return
+                }
+            }
+        }
+    }
+
+    private enum class Direction{ LEFT, RIGHT }
 
     private inner class SwipeListener : GestureDetector.SimpleOnGestureListener() {
 

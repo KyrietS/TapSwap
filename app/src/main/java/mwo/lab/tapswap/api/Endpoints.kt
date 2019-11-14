@@ -1,8 +1,6 @@
 package mwo.lab.tapswap.api
 
-import mwo.lab.tapswap.api.models.Request
-import mwo.lab.tapswap.api.models.RequestResult
-import mwo.lab.tapswap.api.models.UserItems
+import mwo.lab.tapswap.api.models.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -12,6 +10,9 @@ import retrofit2.http.*
 interface Endpoints {
     @GET("/items/get-user-items")
     fun getUserItems() : Call<UserItems>
+
+    @GET("/items/get-rand-item")
+    fun getRandItem() : Call<DiscoverItems>
 
     @Multipart
     @POST("/items/add")
