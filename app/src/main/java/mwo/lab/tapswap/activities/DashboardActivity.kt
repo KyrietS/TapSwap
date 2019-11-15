@@ -1,11 +1,11 @@
 package mwo.lab.tapswap.activities
 
+import LoginActivity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import mwo.lab.tapswap.R
-
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -42,7 +42,7 @@ class DashboardActivity : AppCompatActivity() {
     }
     @Suppress("UNUSED_PARAMETER")
     fun whateverOnClick(v: View) {
-        val intent = Intent(this, ItemPreviewActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
 
