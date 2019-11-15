@@ -1,6 +1,5 @@
 package mwo.lab.tapswap.activities
 
-import android.R
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +11,10 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 
+
 import LoginActivity
+import android.app.Activity
+import mwo.lab.tapswap.R
 
 class SignupActivity : AppCompatActivity() {
 
@@ -23,10 +25,9 @@ class SignupActivity : AppCompatActivity() {
     internal var _passwordText: EditText? = null
     internal var _reEnterPasswordText: EditText? = null
     internal var _signupButton: Button? = null
-    @BindView(R.id.link_login)
     internal var _loginLink: TextView? = null
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
@@ -60,13 +61,7 @@ class SignupActivity : AppCompatActivity() {
 
         _signupButton!!.isEnabled = false
 
-        val progressDialog = ProgressDialog(
-            this@SignupActivity,
-            //R.style.AppTheme_Dark_Dialog
-        )
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("Creating Account...")
-        progressDialog.show()
+
 
         val name = _nameText!!.text.toString()
         val address = _addressText!!.text.toString()
@@ -83,7 +78,7 @@ class SignupActivity : AppCompatActivity() {
                 // depending on success
                 onSignupSuccess()
                 // onSignupFailed();
-                progressDialog.dismiss()
+                //progressDialog.dismiss()
             }, 3000
         )
     }
