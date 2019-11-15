@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="mwo.lab.tapswap">
 
-    <uses-feature android:name="android.hardware.camera"
+    <uses-feature
+            android:name="android.hardware.camera"
             android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
             android:allowBackup="true"
@@ -14,6 +16,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activities.ItemPreviewActivity"></activity>
+
         <provider
                 android:name="android.support.v4.content.FileProvider"
                 android:authorities="mwo.lab.tapswap.fileprovider"
@@ -21,25 +25,26 @@
                 android:grantUriPermissions="true">
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths"/>
+                    android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activities.LaunchScreenActivity" android:theme="@style/LaunchScreenTheme">
+        <activity
+                android:name=".activities.LaunchScreenActivity"
+                android:theme="@style/LaunchScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity"></activity>
-        <activity android:name=".activities.DashboardActivity"></activity>
-
-        <activity android:name=".activities.MyItemsActivity"></activity>
-        <activity android:name=".activities.DiscoverActivity"></activity>
-        <activity android:name=".activities.AddItemActivity"></activity>
-        <activity android:name=".activities.MyAccountActivity"></activity>
-        <activity android:name=".activities.WhateverActivity"></activity>
-        <activity android:name=".activities.MySwapsActivity"></activity>
-
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.DashboardActivity" />
+        <activity android:name=".activities.MyItemsActivity" />
+        <activity android:name=".activities.DiscoverActivity" />
+        <activity android:name=".activities.AddItemActivity" />
+        <activity android:name=".activities.MyAccountActivity" />
+        <activity android:name=".activities.WhateverActivity" />
+        <activity android:name=".activities.MySwapsActivity" />
     </application>
 
 </manifest>

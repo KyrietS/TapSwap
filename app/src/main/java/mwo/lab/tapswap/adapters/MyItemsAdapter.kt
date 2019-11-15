@@ -12,10 +12,12 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import mwo.lab.tapswap.R
-import mwo.lab.tapswap.activities.AddItemActivity
+import mwo.lab.tapswap.activities.ItemPreviewActivity
 import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.api.models.Item
+import mwo.lab.tapswap.api.models.RequestResult
+import mwo.lab.tapswap.api.models.UserItems
 import mwo.lab.tapswap.views.LoadingView
-import mwo.lab.tapswap.api.models.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -85,6 +87,9 @@ class MyItemsAdapter(
         viewHolder.itemPopupMenu.setOnClickListener {
             showPopupMenu(viewHolder.itemPopupMenu, i)
         }
+        viewHolder.itemView.setOnClickListener {
+            previewItem(item)
+        }
     }
 
     // TODO: position parameter is necessary to implement delete action
@@ -98,9 +103,7 @@ class MyItemsAdapter(
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.preview -> {
-                    Toast.makeText(context, "TODO: Fill fields with data", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(context, AddItemActivity::class.java)
-                    context.startActivity(intent)
+                    previewItem(items[position])
                 }
                 R.id.remove -> {
                     AlertDialog.Builder(context)
@@ -117,6 +120,14 @@ class MyItemsAdapter(
             true
         }
         popup.show()
+    }
+
+    private fun previewItem(item: Item) {
+        val intent = Intent(context, ItemPreviewActivity::class.java)
+        intent.putExtra("itemPhoto", item.itemPhoto)
+        intent.putExtra("itemName", item.itemName)
+        intent.putExtra("itemDescription", item.itemDescription)
+        context.startActivity(intent)
     }
 
     private fun deleteItem(item: Item) {

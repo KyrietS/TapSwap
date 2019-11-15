@@ -15,4 +15,6 @@
     <string name="save">Zapisz</string>
     <string name="delete">Usuń</string>
     <string name="preview">Podgląd</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque fringilla nisi orci, lacinia pulvinar nisl cursus a. Donec sed pharetra leo, a pretium tellus. Praesent convallis ac ipsum vel luctus. Integer orci lorem, tempus sed interdum non, placerat ut lacus. Cras sit amet mauris id magna pharetra pretium a nec velit. Fusce leo libero, porttitor et felis sit amet, rutrum vulputate velit. In aliquet egestas nibh, id pharetra neque egestas at. Nullam sed congue libero. Maecenas nisl velit, varius ac porta non, cursus ac purus. Nunc tristique, dolor pharetra malesuada lobortis, justo mauris blandit erat, efficitur imperdiet eros turpis a massa. Praesent non enim augue. Phasellus eget aliquet neque, at condimentum magna.</string>
+    <string name="close_preview">Zamknij podgląd</string>
 </resources>
