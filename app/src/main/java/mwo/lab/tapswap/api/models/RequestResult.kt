@@ -1,12 +1,12 @@
 package mwo.lab.tapswap.api.models
 
 data class RequestResult(
-    private var _success: String?,
+    private var success: String?,
     var errors: List<Error>?,
     var data: Any?
 ) {
-    val success: Boolean
-        get() = _success=="true"
+    val isSuccess: Boolean
+        get() = success=="true"
 
     data class Error(
         var message: String?,

@@ -1,66 +1,60 @@
+package mwo.lab.tapswap.activities
+
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import mwo.lab.tapswap.R
-import mwo.lab.tapswap.activities.SignupActivity
-
 
 class LoginActivity : AppCompatActivity() {
 
-    internal var _emailText: EditText? = null
-    internal var _passwordText: EditText? = null
-    internal var _loginButton: Button? = null
-    internal var _signupLink: TextView? = null
+    lateinit var emailText: EditText
+    lateinit var passwordText: EditText
+    lateinit var loginButton: Button
+    lateinit var progressBar: ProgressBar
+    lateinit var signUpLink: TextView
+
+    lateinit var scrollView: ScrollView
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        _emailText = findViewById<View>(R.id.input_email) as EditText
-        _passwordText = findViewById<View>(R.id.input_password) as EditText
-        _loginButton = findViewById<View>(R.id.btn_login) as Button
-        _signupLink = findViewById<View>(R.id.link_signup) as TextView
+        emailText = findViewById(R.id.input_email)
+        passwordText = findViewById(R.id.input_password)
+        loginButton = findViewById(R.id.btn_login)
+        progressBar = findViewById(R.id.progress_bar)
+        signUpLink = findViewById(R.id.link_signup)
 
+        scrollView = findViewById(R.id.scroll_view)
 
-        _loginButton!!.setOnClickListener { login() }
+        loginButton.setOnClickListener { login() }
 
-        _signupLink!!.setOnClickListener {
-            // Start the Signup activity
-            val intent = Intent(applicationContext, SignupActivity::class.java)
-            startActivityForResult(intent, REQUEST_SIGNUP)
-            finish()
+        signUpLink.setOnClickListener {
+            // Start the SignUp activity
+            val intent = Intent(applicationContext, SignUpActivity::class.java)
+            startActivityForResult(intent, REQUEST_SIGN_UP)
             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out)
         }
     }
 
-    fun login() {
-        Log.d(TAG, "Login")
-
+    private fun login() {
         if (!validate()) {
             onLoginFailed()
             return
         }
 
-        _loginButton!!.isEnabled = false
+        enableUI(false)
 
-        val progressDialog = ProgressDialog(
-            this@LoginActivity
-            //R.style.AppTheme_Dark_Dialog
-        )
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("Authenticating...")
-        progressDialog.show()
+        progressBar.visibility = View.VISIBLE
 
-        val email = _emailText!!.text.toString()
-        val password = _passwordText!!.text.toString()
+        val email = emailText.text.toString()
+        val password = passwordText.text.toString()
+
+        sendLoginRequest(email, password)
 
         // TODO: Implement your own authentication logic here.
 
@@ -69,19 +63,24 @@ class LoginActivity : AppCompatActivity() {
                 // On complete call either onLoginSuccess or onLoginFailed
                 onLoginSuccess()
                 // onLoginFailed();
-                progressDialog.dismiss()
+//                progressDialog.dismiss()
             }, 3000
         )
     }
 
+    private fun sendLoginRequest(email: String, password: String): String? {
+
+        return ""
+    }
+
+    private fun saveToken(token: String) {
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_SIGNUP) {
+        if (requestCode == REQUEST_SIGN_UP) {
             if (resultCode == Activity.RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish()
+                Snackbar.make(scrollView, "Pomyślnie założono konto. Możesz się zalogować.", Snackbar.LENGTH_LONG).show()
             }
         }
     }
@@ -91,42 +90,46 @@ class LoginActivity : AppCompatActivity() {
         moveTaskToBack(true)
     }
 
-    fun onLoginSuccess() {
-        _loginButton!!.isEnabled = true
+    private fun onLoginSuccess() {
         finish()
     }
 
-    fun onLoginFailed() {
+    private fun onLoginFailed() {
         Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
 
-        _loginButton!!.isEnabled = true
+        enableUI(true)
     }
 
-    fun validate(): Boolean {
+    private fun validate(): Boolean {
         var valid = true
 
-        val email = _emailText!!.text.toString()
-        val password = _passwordText!!.text.toString()
+        val email = emailText.text.toString()
+        val password = passwordText.text.toString()
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText!!.error = "enter a valid email address"
+            emailText.error = "enter a valid email address"
             valid = false
         } else {
-            _emailText!!.error = null
+            emailText.error = null
         }
 
         if (password.isEmpty() || password.length < 4 || password.length > 10) {
-            _passwordText!!.error = "between 4 and 10 alphanumeric characters"
+            passwordText.error = "between 4 and 10 alphanumeric characters"
             valid = false
         } else {
-            _passwordText!!.error = null
+            passwordText.error = null
         }
 
         return valid
     }
 
+    private fun enableUI(state: Boolean) {
+        loginButton.isEnabled = state
+        emailText.isEnabled = state
+        passwordText.isEnabled = state
+    }
+
     companion object {
-        private val TAG = "LoginActivity"
-        private val REQUEST_SIGNUP = 0
+        private const val REQUEST_SIGN_UP = 0
     }
 }
