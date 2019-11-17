@@ -41,7 +41,7 @@
         <activity android:name=".activities.MyAccountActivity"></activity>
         <activity android:name=".activities.WhateverActivity"></activity>
         <activity android:name=".activities.MySwapsActivity"></activity>
-        <activity android:name=".activities.SignupActivity"></activity>
+        <activity android:name=".activities.SignUpActivity"></activity>
         <activity android:name=".activities.LoginActivity"></activity>
 
 
