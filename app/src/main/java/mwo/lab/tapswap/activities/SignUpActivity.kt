@@ -83,9 +83,9 @@ class SignUpActivity : AppCompatActivity() {
         val call = api.addUser(name, email, mobile, password)
         call.enqueue(object : Callback<RequestResult> {
             override fun onResponse(call: Call<RequestResult>, response: Response<RequestResult>) {
-                val success = response.body()?.isSuccess
+                val success = response.body()?.success ?: false
                 val errors = response.body()?.errors
-                if(response.isSuccessful && success == true) {
+                if(response.isSuccessful && success) {
                     onSignUpSuccess()
                 } else if (errors != null){
                     Log.d("sign", "errors")

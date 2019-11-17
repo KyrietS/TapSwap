@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
 import mwo.lab.tapswap.R
 
 class DashboardActivity : AppCompatActivity() {
@@ -42,7 +41,6 @@ class DashboardActivity : AppCompatActivity() {
     }
     @Suppress("UNUSED_PARAMETER")
     fun whateverOnClick(v: View) {
-//        Toast.makeText(this, "AAAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
