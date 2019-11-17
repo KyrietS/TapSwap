@@ -113,7 +113,7 @@ class AddItemActivity : AppCompatActivity() {
         call.enqueue( object : Callback<RequestResult> {
             override fun onResponse(call: Call<RequestResult>, response: Response<RequestResult>) {
                 loading.finish()
-                if(response.isSuccessful && response.body()!!.isSuccess) {
+                if(response.isSuccessful && response.body()!!.success) {
                     Toast.makeText(this@AddItemActivity, "Dodano przedmiot", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@AddItemActivity, MyItemsActivity::class.java)
                     startActivity(intent)

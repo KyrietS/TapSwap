@@ -35,6 +35,10 @@ interface Endpoints {
                 @Field("password") password: String
     ) : Call<RequestResult>
 
+    @FormUrlEncoded
+    @POST("/users/login")
+    fun login(@Field("email") email: String, @Field("password") password: String) : Call<LoginResult>
+
     @POST("/test")
     fun test() : Call<Request>
 }
