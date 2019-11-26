@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="6dp"
+        tools:showIn="@layout/activity_my_swaps">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageButton
+                android:id="@+id/popup_menu"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_dots"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout"
+                android:contentDescription="@string/show_popup_menu" />
+
+        <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/popup_menu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                <TextView
+                        android:id="@+id/my_swap_item_name"
+                        android:layout_width="172dp"
+                        android:layout_height="wrap_content"
+                        android:padding="1dp"
+                        android:text="@string/mock_item_title"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="18sp" />
+
+                <TextView
+                        android:id="@+id/their_swap_item_name"
+                        android:layout_width="163dp"
+                        android:layout_height="wrap_content"
+                        android:padding="1dp"
+                        android:text="@string/mock_item_title"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                <ImageView
+                        android:id="@+id/my_swap_item"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:contentDescription="whatever"
+                        android:src="@drawable/book"></ImageView>
+
+                <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="37dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/swap" />
+
+                <ImageView
+                        android:id="@+id/their_swap_item"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:contentDescription="whatever"
+                        android:src="@drawable/knife"></ImageView>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+</android.support.v7.widget.CardView>
