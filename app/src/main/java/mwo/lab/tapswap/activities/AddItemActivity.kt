@@ -40,12 +40,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-private const val REQUEST_GALLERY_CODE = 1
-private const val REQUEST_CAMERA_CODE = 2
-private const val REQUEST_PERMISSIONS_FOR_GALLERY = 3
-private const val FILEPROVIDER_AUTHORITY = "mwo.lab.tapswap.fileprovider"
+
 
 class AddItemActivity : AppCompatActivity() {
+
+    companion object {
+        private const val REQUEST_GALLERY_CODE = 1
+        private const val REQUEST_CAMERA_CODE = 2
+        private const val REQUEST_PERMISSIONS_FOR_GALLERY = 3
+        private const val FILE_PROVIDER_AUTHORITY = "mwo.lab.tapswap.fileprovider"
+    }
 
     private var currentPhotoPath: String = ""
 
@@ -199,7 +203,7 @@ class AddItemActivity : AppCompatActivity() {
                 Toast.makeText(this, "Nie można utworzyć pliku", Toast.LENGTH_SHORT).show()
                 return
             }
-            val photoURI: Uri = FileProvider.getUriForFile(this, FILEPROVIDER_AUTHORITY, photoFile)
+            val photoURI: Uri = FileProvider.getUriForFile(this, FILE_PROVIDER_AUTHORITY, photoFile)
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             startActivityForResult(pictureIntent, REQUEST_CAMERA_CODE)
         }
