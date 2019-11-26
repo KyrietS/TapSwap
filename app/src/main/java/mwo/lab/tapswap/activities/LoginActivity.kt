@@ -18,11 +18,11 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var emailText: EditText
-    lateinit var passwordText: EditText
-    lateinit var loginButton: Button
+    private lateinit var emailText: EditText
+    private lateinit var passwordText: EditText
+    private lateinit var loginButton: Button
+    private lateinit var signUpLink: TextView
     lateinit var progressBar: ProgressBar
-    lateinit var signUpLink: TextView
 
     lateinit var scrollView: ScrollView
 
