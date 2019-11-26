@@ -27,6 +27,17 @@ interface Endpoints {
     @POST("/items/delete")
     fun deleteItem(@Field("itemId") id: Int) : Call<RequestResult>
 
+    @FormUrlEncoded
+    @POST("/users/add")
+    fun addUser(@Field("name") name: String,
+                @Field("email") email: String,
+                @Field("phone") phone: String,
+                @Field("password") password: String
+    ) : Call<RequestResult>
+
+    @FormUrlEncoded
+    @POST("/users/login")
+    fun login(@Field("email") email: String, @Field("password") password: String) : Call<LoginResult>
 
     @POST("/test")
     fun test() : Call<Request>

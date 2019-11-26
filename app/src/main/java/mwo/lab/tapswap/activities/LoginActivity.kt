@@ -1,134 +1,187 @@
 package mwo.lab.tapswap.activities
 
 import android.app.Activity
-import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import mwo.lab.tapswap.R
-import mwo.lab.tapswap.activities.SignupActivity
-
+import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.api.models.LoginResult
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
-    internal var _emailText: EditText? = null
-    internal var _passwordText: EditText? = null
-    internal var _loginButton: Button? = null
-    internal var _signupLink: TextView? = null
+    private lateinit var emailText: EditText
+    private lateinit var passwordText: EditText
+    private lateinit var loginButton: Button
+    private lateinit var signUpLink: TextView
+    lateinit var progressBar: ProgressBar
+
+    lateinit var scrollView: ScrollView
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        _emailText = findViewById<View>(R.id.input_email) as EditText
-        _passwordText = findViewById<View>(R.id.input_password) as EditText
-        _loginButton = findViewById<View>(R.id.btn_login) as Button
-        _signupLink = findViewById<View>(R.id.link_signup) as TextView
+        emailText = findViewById(R.id.input_email)
+        passwordText = findViewById(R.id.input_password)
+        loginButton = findViewById(R.id.btn_login)
+        progressBar = findViewById(R.id.progress_bar)
+        signUpLink = findViewById(R.id.link_signup)
 
+        scrollView = findViewById(R.id.scroll_view)
 
-        _loginButton!!.setOnClickListener { login() }
+        loginButton.setOnClickListener { login() }
 
-        _signupLink!!.setOnClickListener {
-            // Start the Signup activity
-            val intent = Intent(applicationContext, SignupActivity::class.java)
-            startActivityForResult(intent, REQUEST_SIGNUP)
-            finish()
+        signUpLink.setOnClickListener {
+            // Start the SignUp activity
+            val intent = Intent(applicationContext, SignUpActivity::class.java)
+            startActivityForResult(intent, REQUEST_SIGN_UP)
             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out)
         }
     }
 
-    fun login() {
-        Log.d(TAG, "Login")
-
+    /**
+     * Wciśnięcie przycisku 'zaloguj'
+     */
+    private fun login() {
         if (!validate()) {
             onLoginFailed()
             return
         }
 
-        _loginButton!!.isEnabled = false
+        enableUI(false)
 
-        val progressDialog = ProgressDialog(
-            this@LoginActivity
-            //R.style.AppTheme_Dark_Dialog
-        )
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("Authenticating...")
-        progressDialog.show()
+        progressBar.visibility = View.VISIBLE
 
-        val email = _emailText!!.text.toString()
-        val password = _passwordText!!.text.toString()
+        val email = emailText.text.toString()
+        val password = passwordText.text.toString()
 
-        // TODO: Implement your own authentication logic here.
-
-        android.os.Handler().postDelayed(
-            {
-                // On complete call either onLoginSuccess or onLoginFailed
-                onLoginSuccess()
-                // onLoginFailed();
-                progressDialog.dismiss()
-            }, 3000
-        )
+        sendLoginRequest(email, password)
     }
 
+    /**
+     * Wysłanie do serwera zapytania o token podając email i hasło
+     */
+    private fun sendLoginRequest(email: String, password: String){
+        val api = APIService.create()
+        val call = api.login(email, password)
+        call.enqueue(object : Callback<LoginResult> {
+            override fun onResponse(call: Call<LoginResult>, response: Response<LoginResult>) {
+                val success = response.body()?.success ?: false
+                if(response.isSuccessful && success) {
+                    val token = response.body()!!.data!!.userToken
+                    saveToken(token)
+                    onLoginSuccess()
+                } else if (!success){
+                    Snackbar.make(scrollView, "Niepoprawny email lub hasło", Snackbar.LENGTH_LONG).show()
+                    onLoginFailed()
+                } else {
+                    Log.d("login", "unknown error")
+                    Log.d("login", response.raw().toString())
+                    Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
+                    onLoginFailed()
+                }
+            }
+            override fun onFailure(call: Call<LoginResult>, t: Throwable) {
+                enableUI(true)
+                progressBar.visibility = View.GONE
+                Toast.makeText(this@LoginActivity, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
+    /**
+     * Zapisywanie tokenu w pamięci telefonu
+     */
+    private fun saveToken(token: String) {
+        Log.d("omg", "Zapisałem token: $token")
+        val sharedPref = getSharedPreferences("auth", Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putString("userToken", token)
+            commit()
+        }
+    }
+
+    /**
+     * Powrót z okna rejestracji
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_SIGNUP) {
+        if (requestCode == REQUEST_SIGN_UP) {
             if (resultCode == Activity.RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish()
+                Snackbar.make(scrollView, "Pomyślnie założono konto. Możesz się zalogować.", Snackbar.LENGTH_LONG).show()
             }
         }
     }
 
+    /**
+     * Wyłączenie przycisku wstecz
+     */
     override fun onBackPressed() {
-        // Disable going back to the MainActivity
         moveTaskToBack(true)
     }
 
-    fun onLoginSuccess() {
-        _loginButton!!.isEnabled = true
+    /**
+     * Logowanie nastąpiło pomyślnie
+     */
+    private fun onLoginSuccess() {
+        Toast.makeText(this, "Zalogowano", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
         finish()
     }
 
-    fun onLoginFailed() {
-        Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
-
-        _loginButton!!.isEnabled = true
+    /**
+     * Logowanie się nie powiodło
+     */
+    private fun onLoginFailed() {
+        enableUI(true)
+        progressBar.visibility = View.INVISIBLE
     }
 
-    fun validate(): Boolean {
+    /**
+     * Walidacja pól formularza
+     */
+    private fun validate(): Boolean {
         var valid = true
 
-        val email = _emailText!!.text.toString()
-        val password = _passwordText!!.text.toString()
+        val email = emailText.text.toString()
+        val password = passwordText.text.toString()
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText!!.error = "enter a valid email address"
+            emailText.error = "enter a valid email address"
             valid = false
         } else {
-            _emailText!!.error = null
+            emailText.error = null
         }
 
-        if (password.isEmpty() || password.length < 4 || password.length > 10) {
-            _passwordText!!.error = "between 4 and 10 alphanumeric characters"
+        if (password.isEmpty() || password.length < 4 || password.length > 64) {
+            passwordText.error = "between 4 and 64 alphanumeric characters"
             valid = false
         } else {
-            _passwordText!!.error = null
+            passwordText.error = null
         }
 
         return valid
     }
 
+    /**
+     * Blokowanie UI
+     */
+    private fun enableUI(state: Boolean) {
+        loginButton.isEnabled = state
+        emailText.isEnabled = state
+        passwordText.isEnabled = state
+    }
+
     companion object {
-        private val TAG = "LoginActivity"
-        private val REQUEST_SIGNUP = 0
+        private const val REQUEST_SIGN_UP = 0
     }
 }
