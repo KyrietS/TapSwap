@@ -30,10 +30,6 @@ class MySwapsActivity : AppCompatActivity() {
         val myAdapter = MySwapsAdapter(this)
         recyclerView.adapter = myAdapter
 
-        val addButton = findViewById<Button>(R.id.addButton)
-        addButton.setOnClickListener {
-            val intent = Intent(this, AddItemActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 }

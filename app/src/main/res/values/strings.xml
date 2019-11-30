@@ -21,5 +21,21 @@
     <string name="they_swap">Dostaniesz</string>
     <string name="confirm">Potwierdź</string>
     <string name="cancel">Anuluj</string>
+    <string name="swap_info">Informacje dot. wymiany</string>
+    <string name="swap_person_data">Dane osoby:</string>
+    <string name="mock_person_name">Jakiś Random</string>
+    <string name="mock_person_phone_number">666666666</string>
+    <string name="mock_person_email">jakis.random@gmail.com</string>
+    <string name="email">Adres email:</string>
+    <string name="phone_number">Numer telefonu:</string>
+    <string name="price_point">Kategoria cenowa:</string>
+    <string name="mock_price_point">Miliony</string>
+
+
+
+
+
+
+
 
 </resources>
