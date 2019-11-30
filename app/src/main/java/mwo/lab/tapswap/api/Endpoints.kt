@@ -41,4 +41,7 @@ interface Endpoints {
 
     @POST("/test")
     fun test() : Call<Request>
+
+    @GET("matches/get-accepted-matches")
+    fun getUserSwaps() : Call<UserSwaps>
 }

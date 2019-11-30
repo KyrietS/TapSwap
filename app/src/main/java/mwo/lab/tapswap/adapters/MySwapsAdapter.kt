@@ -16,7 +16,7 @@ import mwo.lab.tapswap.activities.ItemPreviewActivity
 import mwo.lab.tapswap.api.APIService
 import mwo.lab.tapswap.api.models.Item
 import mwo.lab.tapswap.api.models.RequestResult
-import mwo.lab.tapswap.api.models.UserItems
+import mwo.lab.tapswap.api.models.UserSwaps
 import mwo.lab.tapswap.views.LoadingView
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,13 +35,13 @@ class MySwapsAdapter(
     fun fetchData() {
         // Sending request for all my items
         val api = APIService.create()
-        val call = api.getUserItems()
+        val call = api.getUserSwaps()
 
         // Show loading circle
         val loading = context.findViewById<LoadingView>(R.id.loading)!!
         loading.begin()
-        call.enqueue(object : Callback<UserItems> {
-            override fun onResponse(call: Call<UserItems>, response: Response<UserItems>) {
+        call.enqueue(object : Callback<UserSwaps> {
+            override fun onResponse(call: Call<UserSwaps>, response: Response<UserSwaps>) {
                 if (response.isSuccessful) {
                     items = response.body()?.data ?: listOf()
                     notifyDataSetChanged()
@@ -49,7 +49,7 @@ class MySwapsAdapter(
                 }
             }
 
-            override fun onFailure(call: Call<UserItems>, t: Throwable) {
+            override fun onFailure(call: Call<UserSwaps>, t: Throwable) {
                 loading.finish()
                 Toast.makeText(context, "Connection error", Toast.LENGTH_SHORT).show()
             }
