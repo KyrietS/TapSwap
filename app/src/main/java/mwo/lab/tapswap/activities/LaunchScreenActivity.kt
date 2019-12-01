@@ -22,7 +22,7 @@ class LaunchScreenActivity : AppCompatActivity() {
     }
 
     private fun startDashboard() {
-        // Sending request for all my items
+        // Sending request for testing my token
         val api = APIService.create()
         val call = api.isTokenValid()
 
