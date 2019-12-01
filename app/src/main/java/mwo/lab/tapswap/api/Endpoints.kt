@@ -39,6 +39,9 @@ interface Endpoints {
     @POST("/users/login")
     fun login(@Field("email") email: String, @Field("password") password: String) : Call<LoginResult>
 
+    @GET("/auth/istokenvalid")
+    fun isTokenValid() : Call<RequestResult>
+
     @POST("/test")
     fun test() : Call<Request>
 }
