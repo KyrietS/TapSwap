@@ -125,7 +125,7 @@
                 android:backgroundTintMode="src_atop"
                 android:fontFamily="@font/comfortaa_light"
                 android:onClick="whateverOnClick"
-                android:text="Surprise"
+                android:text="Logout"
                 android:textAllCaps="false"
                 android:textSize="30sp"
                 android:textStyle="bold" />
