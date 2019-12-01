@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageSwitcher
 import android.widget.ImageView
 import android.widget.Toast
@@ -87,6 +88,10 @@ class DiscoverActivity : AppCompatActivity() {
             gestureDetector.onTouchEvent(event)
             true
         }
+
+        // Setting up button on click listeners
+        findViewById<Button>(R.id.wantedBtn).setOnClickListener { moveNextOrPrevious(-1) }
+        findViewById<Button>(R.id.wantedBtn).setOnClickListener { moveNextOrPrevious(1) }
     }
 
     /**
