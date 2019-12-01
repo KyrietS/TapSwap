@@ -14,6 +14,14 @@ interface Endpoints {
     @GET("/items/get-rand-item")
     fun getRandItem() : Call<DiscoverItems>
 
+    @FormUrlEncoded
+    @POST("/items/set-as-wanted")
+    fun setItemAsWanted(@Field("itemId") id: Int) : Call<RequestResult>
+
+    @FormUrlEncoded
+    @POST("/items/set-as-unwanted")
+    fun setItemAsUnwanted(@Field("itemId") id: Int) : Call<RequestResult>
+
     @Multipart
     @POST("/items/add")
     fun addItem(@Part file: MultipartBody.Part,
