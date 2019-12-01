@@ -45,7 +45,7 @@
                         android:padding="5dp"
                         android:textColor="@color/colorTitle"
                         android:textSize="24sp"
-                        tools:text="@string/you_swap" />
+                        android:text="@string/you_swap" />
 
                 <ImageView
                         android:id="@+id/you_swap_item_image"
@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/mock_item_title"
+                        tools:text="@string/mock_item_title"
                         android:textColor="@color/colorTitle"
                         android:textSize="18sp" />
             </LinearLayout>
@@ -93,7 +93,7 @@
                         android:textAlignment="textEnd"
                         android:textColor="@color/colorTitle"
                         android:textSize="24sp"
-                        tools:text="@string/they_swap" />
+                        android:text="@string/they_swap" />
 
                 <ImageView
                         android:id="@+id/they_swap_item_image"
@@ -108,7 +108,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/mock_item_title"
+                        tools:text="@string/mock_item_title"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/colorTitle"
                         android:textSize="18sp" />
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTitle"
                     android:textSize="24sp"
-                    tools:text="@string/swap_info" />
+                    android:text="@string/swap_info" />
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -160,7 +160,7 @@
                             android:id="@+id/textView6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/mock_person_name"
+                            tools:text="@string/mock_person_name"
                             android:textColor="@color/colorTitle"
                             android:textSize="18sp" />
 
@@ -177,7 +177,7 @@
                             android:id="@+id/textView7"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/mock_person_email"
+                            tools:text="@string/mock_person_email"
                             android:textColor="@color/colorTitle"
                             android:textSize="18sp" />
 
@@ -194,7 +194,7 @@
                             android:id="@+id/textView8"
                             android:layout_width="174dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/mock_person_phone_number"
+                            tools:text="@string/mock_person_phone_number"
                             android:textColor="@color/colorTitle"
                             android:textSize="18sp" />
 
@@ -210,7 +210,7 @@
                         android:id="@+id/textView12"
                         android:layout_width="174dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/mock_price_point"
+                            tools:text="@string/mock_price_point"
                         android:textColor="@color/colorTitle"
                         android:textSize="18sp" />
 
