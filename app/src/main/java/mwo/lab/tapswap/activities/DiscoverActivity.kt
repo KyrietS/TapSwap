@@ -1,6 +1,7 @@
 package mwo.lab.tapswap.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.GestureDetector
@@ -112,11 +113,19 @@ class DiscoverActivity : AppCompatActivity() {
                 if(response.isSuccessful && response.body() != null) {
                     // Add new items to the end of the list
                     val data = response.body()?.data ?: listOf()
-                    items.addAll(data)
 
-                    // Load new picture if there was no picture
-                    if(numOfItems == 0)
-                        moveNextOrPrevious(0)
+                    // API returned empty array
+                    if(data.isEmpty()){
+                       Toast.makeText(this@DiscoverActivity, "Aktualnie brak przedmiotów do wyświetlenia", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@DiscoverActivity, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        items.addAll(data)
+                        // Load new picture if there was no picture
+                        if(numOfItems == 0)
+                            moveNextOrPrevious(0)
+                    }
                 } else {
                     onFailure(call, null)
                 }
