@@ -16,6 +16,7 @@ import mwo.lab.tapswap.activities.ItemPreviewActivity
 import mwo.lab.tapswap.api.APIService
 import mwo.lab.tapswap.api.models.Item
 import mwo.lab.tapswap.api.models.RequestResult
+import mwo.lab.tapswap.api.models.Swap
 import mwo.lab.tapswap.api.models.UserSwaps
 import mwo.lab.tapswap.views.LoadingView
 import retrofit2.Call
@@ -24,16 +25,16 @@ import retrofit2.Response
 
 class MySwapsAdapter(
     private val context: Activity
-) : RecyclerView.Adapter<MySwapsAdapter.ItemHolder>() {
+) : RecyclerView.Adapter<MySwapsAdapter.SwapHolder>() {
 
-    var items = listOf<Item>()
+    var swaps = listOf<Swap>()
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         fetchData()
     }
 
     fun fetchData() {
-        // Sending request for all my items
+        // Sending request for all my swaps
         val api = APIService.create()
         val call = api.getUserSwaps()
 
@@ -43,7 +44,7 @@ class MySwapsAdapter(
         call.enqueue(object : Callback<UserSwaps> {
             override fun onResponse(call: Call<UserSwaps>, response: Response<UserSwaps>) {
                 if (response.isSuccessful) {
-                    items = response.body()?.data ?: listOf()
+                    swaps = response.body()?.data ?: listOf()
                     notifyDataSetChanged()
                     loading.finish()
                 }
@@ -59,37 +60,37 @@ class MySwapsAdapter(
     // Implementation ViewHolder pattern
     // every object of this class has it's own reference to the layout element
     // so we call findViewById() only once for each element in the list.
-    inner class ItemHolder(item: View) : RecyclerView.ViewHolder(item) {
-        var itemTitle: TextView = item.findViewById(R.id.title)
-        var itemDescription: TextView = item.findViewById(R.id.description)
-        var itemPopupMenu: ImageButton = item.findViewById(R.id.popup_menu)
+    inner class SwapHolder(swap: View) : RecyclerView.ViewHolder(swap) {
+        var myItemTitle: TextView = swap.findViewById(R.id.my_swap_item_name)
+        var theirItemTitle: TextView = swap.findViewById(R.id.their_swap_item_name)
+        var myItemPhoto: TextView = swap.findViewById(R.id.my_swap_item)
+        var theirItemPhoto: TextView = swap.findViewById(R.id.their_swap_item)
+        var swapPopupMenu: ImageButton = swap.findViewById(R.id.popup_menu)
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ItemHolder {
-        // inflate layout for single item
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): SwapHolder {
+        // inflate layout for single swap
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.my_item, viewGroup, false)
+            .inflate(R.layout.my_swap, viewGroup, false)
 
-        // create and return my item holder
-        return ItemHolder(view)
+        // create and return my swap holder
+        return SwapHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return swaps.size
     }
 
-    override fun onBindViewHolder(viewHolder: ItemHolder, i: Int) {
+    override fun onBindViewHolder(viewHolder: SwapHolder, i: Int) {
         // fill item layout
-        val item = items[i]
-        viewHolder.itemTitle.text = item.itemName
-        viewHolder.itemDescription.text = item.itemDescription
+        val swap = swaps[i]
+        //viewHolder.itemTitle.text = item.itemName
+        //viewHolder.itemDescription.text = item.itemDescription
 
-        viewHolder.itemPopupMenu.setOnClickListener {
-            showPopupMenu(viewHolder.itemPopupMenu, i)
+        viewHolder.swapPopupMenu.setOnClickListener {
+            showPopupMenu(viewHolder.swapPopupMenu, i)
         }
-        viewHolder.itemView.setOnClickListener {
-            previewItem(item)
-        }
+
     }
 
     // TODO: position parameter is necessary to implement delete action
@@ -97,56 +98,25 @@ class MySwapsAdapter(
         // inflate menu
         val popup = PopupMenu(view.context, view)
         val inflater = popup.menuInflater
-        inflater.inflate(R.menu.my_item_popup_menu, popup.menu)
+        inflater.inflate(R.menu.my_swap_popup_menu, popup.menu)
 
         // actions for menu buttons
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.preview -> {
-                    previewItem(items[position])
+                R.id.details -> {
+                    viewDetails(swaps[position])
                 }
-                R.id.remove -> {
-                    AlertDialog.Builder(context)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Usuwanie przedmiotu")
-                        .setMessage("Czy na pewno chcesz usunąć ten przedmiot?")
-                        .setPositiveButton("Tak") { _, _ ->
-                            deleteItem(items[position])
-                        }
-                        .setNegativeButton("Nie", null)
-                        .show()
-                }
+
             }
             true
         }
         popup.show()
     }
 
-    private fun previewItem(item: Item) {
-        val intent = Intent(context, ItemPreviewActivity::class.java)
-        intent.putExtra("itemPhoto", item.itemPhoto)
-        intent.putExtra("itemName", item.itemName)
-        intent.putExtra("itemDescription", item.itemDescription)
-        context.startActivity(intent)
+    private fun viewDetails(swap: Swap){
+
     }
 
-    private fun deleteItem(item: Item) {
-        val api = APIService.create()
-        val call = api.deleteItem(item.id)
-        val loading = context.findViewById<LoadingView>(R.id.loading)!!
-        loading.begin()
-        call.enqueue(object : Callback<RequestResult> {
-            override fun onResponse(call: Call<RequestResult>, response: Response<RequestResult>) {
-                loading.finish()
-                Toast.makeText(context, "Usunięto przedmiot z konta", Toast.LENGTH_SHORT).show()
-                fetchData()
-            }
 
-            override fun onFailure(call: Call<RequestResult>, t: Throwable) {
-                loading.finish()
-                Toast.makeText(context, "Connection error", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
 }
 

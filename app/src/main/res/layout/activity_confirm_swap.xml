@@ -119,7 +119,7 @@
                         android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/mock_item_title"
+                        tools:text="@string/mock_item_title"
                         android:textColor="@color/fontDark"
                         android:textSize="20sp" />
 
@@ -136,7 +136,7 @@
                         android:id="@+id/textView12"
                         android:layout_width="174dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/mock_price_point"
+                        tools:text="@string/mock_price_point"
                         android:textColor="@color/fontDark"
                         android:textSize="18sp" />
             </LinearLayout>
