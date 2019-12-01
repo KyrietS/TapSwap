@@ -1,6 +1,7 @@
 package mwo.lab.tapswap.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.GestureDetector
@@ -8,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageSwitcher
 import android.widget.ImageView
 import android.widget.Toast
@@ -18,6 +20,7 @@ import mwo.lab.tapswap.adapters.ImageSwitcherPicasso
 import mwo.lab.tapswap.api.APIService
 import mwo.lab.tapswap.api.models.DiscoverItems
 import mwo.lab.tapswap.api.models.Item
+import mwo.lab.tapswap.api.models.RequestResult
 import mwo.lab.tapswap.views.LoadingView
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +34,7 @@ class DiscoverActivity : AppCompatActivity() {
     private lateinit var overscrollLeft: View
     private lateinit var overscrollRight: View
 
+    private lateinit var loading: LoadingView
     private lateinit var imageSwitcherPicasso: ImageSwitcherPicasso
     private lateinit var gestureDetector: GestureDetector
 
@@ -51,6 +55,9 @@ class DiscoverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
 
+        // Show loading circle
+        loading = findViewById(R.id.loading)!!
+
         // Fetch items as soon as possible
         fetchItems()
 
@@ -59,7 +66,7 @@ class DiscoverActivity : AppCompatActivity() {
         overscrollLeft = findViewById(R.id.overscroll_left)
         overscrollRight = findViewById(R.id.overscroll_right)
 
-        imageSwitcherPicasso = ImageSwitcherPicasso(this, imageSwitcher)
+        imageSwitcherPicasso = ImageSwitcherPicasso(this, imageSwitcher, loading)
 
         // Animations
         slideInLeft = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
@@ -82,6 +89,10 @@ class DiscoverActivity : AppCompatActivity() {
             gestureDetector.onTouchEvent(event)
             true
         }
+
+        // Setting up button on click listeners
+        findViewById<Button>(R.id.wantedBtn).setOnClickListener { moveNextOrPrevious(-1) }
+        findViewById<Button>(R.id.wantedBtn).setOnClickListener { moveNextOrPrevious(1) }
     }
 
     /**
@@ -94,8 +105,6 @@ class DiscoverActivity : AppCompatActivity() {
         val call = api.getRandItem()
         val numOfItems = items.size
 
-        // Show loading circle
-        val loading = findViewById<LoadingView>(R.id.loading)!!
         // For first fetching show loading circle
         if(numOfItems == 0)
             loading.begin()
@@ -104,15 +113,24 @@ class DiscoverActivity : AppCompatActivity() {
                 if(response.isSuccessful && response.body() != null) {
                     // Add new items to the end of the list
                     val data = response.body()?.data ?: listOf()
-                    items.addAll(data)
 
-                    // Load new picture if there was no picture
-                    if(numOfItems == 0)
-                        moveNextOrPrevious(0)
+                    // API returned empty array
+                    if(data.isEmpty()){
+                       Toast.makeText(this@DiscoverActivity, "Aktualnie brak przedmiotów do przejrzenia", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@DiscoverActivity, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        items.addAll(data)
+                        // Load new picture if there was no picture
+                        if(numOfItems == 0)
+                            moveNextOrPrevious(0)
+                    }
+                } else {
+                    onFailure(call, null)
                 }
-                loading.finish()
             }
-            override fun onFailure(call: Call<DiscoverItems>, t: Throwable) {
+            override fun onFailure(call: Call<DiscoverItems>, t: Throwable?) {
                 loading.finish()
                 Toast.makeText(this@DiscoverActivity, "Connection error", Toast.LENGTH_SHORT).show()
             }
@@ -129,7 +147,11 @@ class DiscoverActivity : AppCompatActivity() {
             fetchItems()
         }
 
-        // TODO: akceptacja / odrzucanie przedmiotu
+        // Akceptacja / odrzucanie przedmiotu
+        if(delta<0 && items.size > 0)
+            setItemAsWanted(items[0].id)
+        if(delta>0 && items.size > 0)
+            setItemAsUnwanted(items[0].id)
 
         // Displaying new image with it's data
         if (items.size > 0) {
@@ -152,6 +174,30 @@ class DiscoverActivity : AppCompatActivity() {
                     .fetch()
             }
         }
+    }
+
+    private fun setItemAsWanted(itemId: Int) {
+        setItemAs(true, itemId)
+    }
+    private fun setItemAsUnwanted(itemId: Int) {
+        setItemAs(false, itemId)
+    }
+
+    private fun setItemAs(wanted: Boolean, itemId: Int) {
+        // Sending request
+        val api = APIService.create()
+        val call = if (wanted) api.setItemAsWanted(itemId) else api.setItemAsUnwanted(itemId)
+
+        call.enqueue( object : Callback<RequestResult> {
+            override fun onResponse(call: Call<RequestResult>, response: Response<RequestResult>) {
+                if(!response.isSuccessful && response.body()?.success != true) {
+                    onFailure(call, null)
+                }
+            }
+            override fun onFailure(call: Call<RequestResult>, t: Throwable?) {
+                Toast.makeText(this@DiscoverActivity, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     /**
