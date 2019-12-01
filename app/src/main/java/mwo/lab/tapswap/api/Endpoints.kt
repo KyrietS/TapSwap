@@ -47,12 +47,13 @@ interface Endpoints {
     @POST("/users/login")
     fun login(@Field("email") email: String, @Field("password") password: String) : Call<LoginResult>
 
+    @GET("matches/get-pending-matches")
+    fun getPendingMatches() : Call<Matches>
+
     @GET("/auth/istokenvalid")
     fun isTokenValid() : Call<RequestResult>
 
     @POST("/test")
     fun test() : Call<Request>
 
-    @GET("matches/get-accepted-matches")
-    fun getUserSwaps() : Call<UserSwaps>
 }

@@ -38,63 +38,88 @@
                 app:layout_constraintTop_toTopOf="parent">
 
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout1"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:visibility="visible">
 
                 <TextView
-                        android:id="@+id/my_swap_item_name"
-                        android:layout_width="172dp"
+                        android:id="@+id/my_item_name"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:padding="1dp"
-                        tools:text="@string/mock_item_title"
                         android:textColor="@color/colorTitle"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/other_item_name"
+                        tools:text="@string/mock_item_title" />
 
                 <TextView
-                        android:id="@+id/their_swap_item_name"
-                        android:layout_width="163dp"
+                        android:id="@+id/other_item_name"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:padding="1dp"
-                        tools:text="@string/mock_item_title"
                         android:textAlignment="textEnd"
                         android:textColor="@color/colorTitle"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/my_item_name"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/mock_item_title" />
 
 
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:visibility="visible">
 
                 <ImageView
-                        android:id="@+id/my_swap_item"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
+                        android:id="@+id/my_item_photo"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="w,1:1"
                         android:contentDescription="whatever"
-                        android:src="@drawable/book"></ImageView>
+                        android:src="@drawable/book"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                         android:id="@+id/imageView"
                         android:layout_width="37dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/other_item_photo"
+                        app:layout_constraintStart_toEndOf="@+id/my_item_photo"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/swap" />
 
                 <ImageView
-                        android:id="@+id/their_swap_item"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
+                        android:id="@+id/other_item_photo"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="37dp"
                         android:contentDescription="whatever"
-                        android:src="@drawable/knife"></ImageView>
+                        android:src="@drawable/knife"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="w,1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/my_item_photo"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
