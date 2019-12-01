@@ -116,7 +116,7 @@ class DiscoverActivity : AppCompatActivity() {
 
                     // API returned empty array
                     if(data.isEmpty()){
-                       Toast.makeText(this@DiscoverActivity, "Aktualnie brak przedmiotów do wyświetlenia", Toast.LENGTH_SHORT).show()
+                       Toast.makeText(this@DiscoverActivity, "Aktualnie brak przedmiotów do przejrzenia", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@DiscoverActivity, DashboardActivity::class.java)
                         startActivity(intent)
                         finish()
