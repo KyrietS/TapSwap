@@ -116,7 +116,7 @@
                     android:orientation="vertical">
 
                 <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/myItemName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="@string/mock_item_title"
@@ -133,7 +133,7 @@
                         android:textSize="20sp" />
 
                 <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/price"
                         android:layout_width="174dp"
                         android:layout_height="wrap_content"
                         tools:text="@string/mock_price_point"
