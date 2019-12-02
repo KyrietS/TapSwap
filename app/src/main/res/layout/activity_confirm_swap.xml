@@ -235,4 +235,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.809"
             app:layout_constraintStart_toStartOf="parent" />
+
+    <mwo.lab.tapswap.views.LoadingView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
 </android.support.constraint.ConstraintLayout>

@@ -47,11 +47,19 @@ interface Endpoints {
     @POST("/users/login")
     fun login(@Field("email") email: String, @Field("password") password: String) : Call<LoginResult>
 
-    @GET("matches/get-pending-matches")
+    @GET("/matches/get-pending-matches")
     fun getPendingMatches() : Call<Matches>
 
-    @GET("matches/get-all-matches")
+    @GET("/matches/get-all-matches")
     fun getAllMatches() : Call<Matches>
+
+    @FormUrlEncoded
+    @POST("/matches/accept-match")
+    fun acceptMatch(@Field("matchId") matchId: Int) : Call<RequestResult>
+
+    @FormUrlEncoded
+    @POST("/matches/decline-match")
+    fun declineMatch(@Field("matchId") matchId: Int) : Call<RequestResult>
 
     @GET("/auth/istokenvalid")
     fun isTokenValid() : Call<RequestResult>
