@@ -10,6 +10,7 @@ data class Matches(
     ) {
         class Match (
             var id: Int,
+            var status: String,
             var myItem: MatchesItem,
             var exchangeItem: MatchesItem,
             var toWho: MatchesWho,
