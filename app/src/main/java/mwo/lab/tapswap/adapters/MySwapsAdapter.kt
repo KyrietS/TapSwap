@@ -26,10 +26,6 @@ class MySwapsAdapter(
 
     var swaps = listOf<Matches.MatchesData.Match>()
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        fetchData()
-    }
-
     fun fetchData() {
         // Sending request for all my swaps
         val api = APIService.create()
