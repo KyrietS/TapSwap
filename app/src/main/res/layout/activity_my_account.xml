@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scroll_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -15,10 +16,11 @@
 
         <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="24dp"
-                android:src="@drawable/tapswap_logo" />
+                android:src="@drawable/tapswap_logo"
+                app:srcCompat="@drawable/user_placeholder" />
 
         <!-- Name Label -->
         <android.support.design.widget.TextInputLayout
@@ -31,7 +33,7 @@
                     android:id="@+id/input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Imię"
+                    android:hint="@string/mock_person_name"
                     android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
@@ -46,7 +48,7 @@
                     android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/mock_person_email"
                     android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -62,7 +64,7 @@
                     android:id="@+id/input_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Numer Telefonu"
+                    android:hint="@string/mock_person_phone_number"
                     android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
@@ -77,7 +79,20 @@
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Hasło"
+                    android:hint="Obecne Hasło"
+                    android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+            <EditText
+                    android:id="@+id/input_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nowe Hasło"
                     android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -104,7 +119,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:padding="12dp"
-                android:text="Utwórz Konto" />
+                android:text="Zapisz Zmiany" />
 
         <ProgressBar
                 android:id="@+id/progress_bar"
@@ -117,15 +132,6 @@
                 android:indeterminateTint="#1a09d6"
                 android:max="100"
                 android:visibility="gone" />
-
-        <TextView
-                android:id="@+id/link_login"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:text="Masz już konto? Zaloguj się!"
-                android:textSize="16dip" />
 
     </LinearLayout>
 </ScrollView>
