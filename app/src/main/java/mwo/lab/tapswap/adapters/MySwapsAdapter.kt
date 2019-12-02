@@ -178,9 +178,12 @@ class MySwapsAdapter(
         intent.putExtra("myItemPrice", swap.myItem.priceCategory)
         intent.putExtra("otherItemPrice", swap.exchangeItem.priceCategory)
         // Dane osoby
-        intent.putExtra("name", swap.toWho.name)
-        intent.putExtra("email", swap.toWho.email)
-        intent.putExtra("phone", swap.toWho.phone)
+        intent.putExtra("toName", swap.toWho.name)
+        intent.putExtra("toEmail", swap.toWho.email)
+        intent.putExtra("toPhone", swap.toWho.phone)
+        intent.putExtra("fromName", swap.fromWho.name)
+        intent.putExtra("fromEmail", swap.fromWho.email)
+        intent.putExtra("fromPhone", swap.fromWho.phone)
 
         context.startActivity(intent)
     }

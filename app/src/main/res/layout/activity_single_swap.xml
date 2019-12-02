@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -20,9 +20,10 @@
             app:layout_constraintVertical_bias="0.0">
 
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="331dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="#31999999"
@@ -31,96 +32,105 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-            <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
 
-                <TextView
-                        android:id="@+id/you_swap_item_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:textColor="@color/colorTitle"
-                        android:textSize="24sp"
-                        android:text="@string/you_swap" />
+            <TextView
+                    android:id="@+id/you_swap_item_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/you_swap"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/myItemName"
+                    app:layout_constraintEnd_toStartOf="@+id/they_swap_item_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                        android:id="@+id/you_swap_item_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="70dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/book" />
 
-                <TextView
-                        android:id="@+id/myItemName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        tools:text="@string/mock_item_title"
-                        android:textColor="@color/colorTitle"
-                        android:textSize="18sp" />
-            </LinearLayout>
+            <TextView
+                    android:id="@+id/otherItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/they_swap_item_title"
+                    app:layout_constraintStart_toEndOf="@+id/you_swap_item_title"
+                    app:layout_constraintTop_toBottomOf="@+id/they_swap_item_title"
+                    tools:text="@string/mock_item_title" />
 
             <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="82dp"
-                    android:layout_height="101dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
+                    android:id="@+id/myItemPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/swap_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/myItemName"
+                    app:srcCompat="@drawable/book" />
+
+            <ImageView
+                    android:id="@+id/swap_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:adjustViewBounds="false"
                     android:gravity="center|center_horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/otherItemPhoto"
+                    app:layout_constraintEnd_toStartOf="@+id/otherItemPhoto"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/myItemPhoto"
+                    app:layout_constraintTop_toBottomOf="@+id/myItemName"
                     app:srcCompat="@drawable/swap" />
 
-            <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+            <TextView
+                    android:id="@+id/they_swap_item_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/they_swap"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/you_swap_item_title"
+                    app:layout_constraintTop_toTopOf="@+id/you_swap_item_title" />
 
-                <TextView
-                        android:id="@+id/they_swap_item_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/colorTitle"
-                        android:textSize="24sp"
-                        android:text="@string/they_swap" />
+            <ImageView
+                    android:id="@+id/otherItemPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/swap_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/otherItemName"
+                    app:srcCompat="@drawable/book" />
 
-                <ImageView
-                        android:id="@+id/they_swap_item_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="70dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/book" />
+            <TextView
+                    android:id="@+id/myItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@+id/myItemPhoto"
+                    app:layout_constraintEnd_toEndOf="@+id/you_swap_item_title"
+                    app:layout_constraintStart_toStartOf="@+id/you_swap_item_title"
+                    app:layout_constraintTop_toBottomOf="@+id/you_swap_item_title"
+                    tools:text="@string/mock_item_title" />
 
-                <TextView
-                        android:id="@+id/otherItemName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        tools:text="@string/mock_item_title"
-                        android:textAlignment="viewEnd"
-                        android:textColor="@color/colorTitle"
-                        android:textSize="18sp" />
 
-            </LinearLayout>
-
-        </LinearLayout>
-
+        </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="329dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="#CAECD0"
@@ -131,94 +141,87 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/swap_info"
+                    android:textAlignment="center"
                     android:textColor="@color/colorTitle"
                     android:textSize="24sp"
-                    android:text="@string/swap_info" />
+                    android:textStyle="bold" />
 
-            <LinearLayout
+
+            <TextView
+                    android:id="@+id/textView5"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/swap_person1_data"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="20sp" />
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+            <TextView
+                    android:id="@+id/toName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_name" />
 
-                    <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="@string/swap_person_data"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="20sp" />
+            <TextView
+                    android:id="@+id/toEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_email" />
 
-                    <TextView
-                            android:id="@+id/name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:text="@string/mock_person_name"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="18sp" />
+            <TextView
+                    android:id="@+id/toPhone"
+                    android:layout_width="174dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_phone_number" />
 
-                    <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/email"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="18sp" />
+            <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/swap_person2_data"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="20sp" />
 
-                    <TextView
-                            android:id="@+id/email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:text="@string/mock_person_email"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="18sp" />
+            <TextView
+                    android:id="@+id/fromName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_name" />
 
-                    <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/phone_number"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="18sp" />
+            <TextView
+                    android:id="@+id/fromEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_email" />
 
-                    <TextView
-                            android:id="@+id/phone"
-                            android:layout_width="174dp"
-                            android:layout_height="wrap_content"
-                            tools:text="@string/mock_person_phone_number"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="18sp" />
-
-                    <TextView
-                            android:id="@+id/textView15"
-                            android:layout_width="174dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/price_point"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="20sp" />
-                    <TextView
-                        android:id="@+id/price"
-                        android:layout_width="174dp"
-                        android:layout_height="wrap_content"
-                            tools:text="@string/mock_price_point"
-                        android:textColor="@color/colorTitle"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <TextView
+                    android:id="@+id/fromPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_phone_number" />
 
         </LinearLayout>
+
 
     </LinearLayout>
 
@@ -227,8 +230,26 @@
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_flag_24px"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Zgłoś nadużycie"
+            android:textAllCaps="false"
+            android:textColor="@color/fontLight"
+            android:textSize="14sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cancelButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/check_small"
@@ -236,35 +257,13 @@
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="@string/confirm"
+            android:text="Zakończ wymianę"
             android:textAllCaps="false"
             android:textColor="@color/fontLight"
-            android:textSize="16sp"
-            android:visibility="invisible"
+            android:textSize="14sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.213"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/confirmButton" />
 
-    <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@android:color/transparent"
-            android:drawableStart="@drawable/cancel_small"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/cancel"
-            android:textAllCaps="false"
-            android:textColor="@color/fontLight"
-            android:textSize="16sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.809"
-            app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

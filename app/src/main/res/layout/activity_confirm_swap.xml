@@ -99,7 +99,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/swap_icon"
                 android:layout_width="82dp"
                 android:layout_height="101dp"
                 android:layout_weight="1"
