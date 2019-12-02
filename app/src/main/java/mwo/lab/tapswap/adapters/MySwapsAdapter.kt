@@ -171,6 +171,9 @@ class MySwapsAdapter(
         // Opis
         intent.putExtra("myItemDesc", swap.myItem.description)
         intent.putExtra("otherItemDesc", swap.exchangeItem.description)
+        // Zdjęcie
+        intent.putExtra("myItemPhoto", swap.myItem.photoUrl)
+        intent.putExtra("otherItemPhoto", swap.exchangeItem.photoUrl)
         // Kategoria cenowa
         intent.putExtra("myItemPrice", swap.myItem.priceCategory)
         intent.putExtra("otherItemPrice", swap.exchangeItem.priceCategory)

@@ -6,7 +6,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -20,74 +20,83 @@
             app:layout_constraintVertical_bias="0.0">
 
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="331dp"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="#31999999"
-                android:backgroundTintMode="add"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+            <TextView
+                    android:id="@+id/they_swap_item_title2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:padding="5dp"
+                    android:text="@string/you_swap"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@id/myItemName"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                        android:id="@+id/you_swap_item_title"
-                        android:layout_width="184dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:text="@string/you_swap"
-                        android:textColor="@color/colorTitle"
-                        android:textSize="24sp" />
-
-                <ImageView
-                        android:id="@+id/you_swap_item_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/book" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+            <ImageView
+                    android:id="@+id/myItemPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/they_swap_item_title2"
+                    app:srcCompat="@drawable/book" />
 
-                <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mock_item_title"
-                        android:textColor="@color/fontDark"
-                        android:textSize="20sp" />
+            <TextView
+                    android:id="@+id/myItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/fontDark"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/mock_item_title" />
 
-                <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="174dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/price_point"
-                        android:textColor="@color/fontDark"
-                        android:textSize="20sp" />
+            <TextView
+                    android:id="@+id/priceCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/price_point"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintTop_toBottomOf="@+id/myItemName"
+                    tools:text="@string/price_point" />
 
-                <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="174dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mock_price_point"
-                        android:textColor="@color/fontDark"
-                        android:textSize="18sp" />
-            </LinearLayout>
-
-        </LinearLayout>
+            <TextView
+                    android:id="@+id/myPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintTop_toBottomOf="@+id/priceCategory"
+                    tools:text="@string/mock_price_point" />
+        </android.support.constraint.ConstraintLayout>
 
         <ImageView
                 android:id="@+id/imageView2"
@@ -99,76 +108,87 @@
                 app:srcCompat="@drawable/swap" />
 
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="331dp"
-                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#CAECD0"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:background="#CAECD0">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="264dp"
-                    android:layout_marginRight="10dp"
+            <TextView
+                    android:id="@+id/otherItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/fontDark"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@+id/they_swap_item_title3"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/mock_item_title" />
+
+            <TextView
+                    android:id="@+id/they_swap_item_title3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:padding="5dp"
+                    android:text="@string/they_swap"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/otherItemName"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                        android:id="@+id/myItemName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="@string/mock_item_title"
-                        android:textColor="@color/fontDark"
-                        android:textSize="20sp" />
-
-                <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="174dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/price_point"
-                        android:textColor="@color/fontDark"
-                        android:textSize="20sp" />
-
-                <TextView
-                        android:id="@+id/price"
-                        android:layout_width="174dp"
-                        android:layout_height="wrap_content"
-                        tools:text="@string/mock_price_point"
-                        android:textColor="@color/fontDark"
-                        android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+            <ImageView
+                    android:id="@+id/otherItemPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    app:layout_constraintDimensionRatio="w,1:1"
 
-                <TextView
-                        android:id="@+id/they_swap_item_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="126dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:text="@string/they_swap"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/colorTitle"
-                        android:textSize="24sp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.719"
+                    app:layout_constraintStart_toStartOf="@+id/they_swap_item_title3"
+                    app:layout_constraintTop_toBottomOf="@+id/they_swap_item_title3"
+                    app:srcCompat="@drawable/book" />
 
-                <ImageView
-                        android:id="@+id/they_swap_item_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/book" />
-            </LinearLayout>
+            <TextView
+                    android:id="@+id/priceCategory1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/price_point"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/otherItemName"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="@+id/otherItemName"
+                    app:layout_constraintTop_toBottomOf="@+id/otherItemName"
+                    tools:text="@string/price_point" />
 
-        </LinearLayout>
+            <TextView
+                    android:id="@+id/otherPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mock_price_point"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/priceCategory1"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="@+id/priceCategory1"
+                    app:layout_constraintTop_toBottomOf="@+id/priceCategory1" />
+        </android.support.constraint.ConstraintLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
 
     <Button
