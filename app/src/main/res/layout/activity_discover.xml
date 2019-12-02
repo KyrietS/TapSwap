@@ -76,7 +76,7 @@
                     android:background="?android:attr/dividerVertical" />
 
             <Button
-                    android:id="@+id/BtnColorPickerCancel"
+                    android:id="@+id/unwantedBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -87,7 +87,7 @@
                     android:text="@string/reject" />
 
             <Button
-                    android:id="@+id/BtnColorPickerOk"
+                    android:id="@+id/wantedBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
