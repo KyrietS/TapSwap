@@ -3,11 +3,18 @@ package mwo.lab.tapswap.activities
 import android.graphics.Point
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
 import mwo.lab.tapswap.R
+import mwo.lab.tapswap.api.APIService
+import mwo.lab.tapswap.api.models.RequestResult
+import mwo.lab.tapswap.views.LoadingView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ConfirmSwapActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +22,7 @@ class ConfirmSwapActivity : AppCompatActivity() {
         setContentView(R.layout.activity_confirm_swap)
 
         fillLayoutWithData()
+        setButtons()
     }
 
     private fun fillLayoutWithData() {
@@ -67,6 +75,56 @@ class ConfirmSwapActivity : AppCompatActivity() {
                     Toast.makeText(this@ConfirmSwapActivity, "Connection error", Toast.LENGTH_SHORT).show()
                 }
             })
+    }
+
+    private fun setButtons() {
+        val confirmButton = findViewById<Button>(R.id.confirmButton)
+        val cancelButton = findViewById<Button>(R.id.cancelButton)
+
+        confirmButton.setOnClickListener {
+            acceptMatch()
+        }
+        cancelButton.setOnClickListener {
+            declineMatch()
+        }
+    }
+
+    private fun acceptMatch() {
+        val id = intent.getIntExtra("matchId", 0)
+        val api = APIService.create()
+        val call = api.acceptMatch(id)
+        val loading = findViewById<LoadingView>(R.id.loading)!!
+        loading.begin()
+        call.enqueue(object : Callback<RequestResult> {
+            override fun onResponse(call: Call<RequestResult>, response: Response<RequestResult>) {
+                loading.finish()
+                Toast.makeText(this@ConfirmSwapActivity, "Zaakceptowano wymianę", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            override fun onFailure(call: Call<RequestResult>, t: Throwable) {
+                loading.finish()
+                Toast.makeText(this@ConfirmSwapActivity, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun declineMatch() {
+        val id = intent.getIntExtra("matchId", 0)
+        val api = APIService.create()
+        val call = api.declineMatch(id)
+        val loading = findViewById<LoadingView>(R.id.loading)!!
+        loading.begin()
+        call.enqueue(object : Callback<RequestResult> {
+            override fun onResponse(call: Call<RequestResult>, response: Response<RequestResult>) {
+                loading.finish()
+                Toast.makeText(this@ConfirmSwapActivity, "Odrzucono wymianę", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            override fun onFailure(call: Call<RequestResult>, t: Throwable) {
+                loading.finish()
+                Toast.makeText(this@ConfirmSwapActivity, "Connection error", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun close() {

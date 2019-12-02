@@ -162,12 +162,8 @@ class LoginActivity : AppCompatActivity() {
             emailText.error = null
         }
 
-        if (password.isEmpty() || password.length < 4 || password.length > 64) {
-            passwordText.error = "between 4 and 64 alphanumeric characters"
-            valid = false
-        } else {
-            passwordText.error = null
-        }
+
+        passwordText.error = null
 
         return valid
     }
