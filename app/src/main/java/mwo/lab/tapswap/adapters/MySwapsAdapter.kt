@@ -165,6 +165,8 @@ class MySwapsAdapter(
                 return
             }
         }
+        // id
+        intent.putExtra("matchId", swap.id)
         // Nazwa przedmiotu
         intent.putExtra("myItemName", swap.myItem.name)
         intent.putExtra("otherItemName", swap.exchangeItem.name)
