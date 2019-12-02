@@ -41,16 +41,18 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="@string/you_swap"
+                    android:textAlignment="textStart"
                     android:textColor="@color/colorTitle"
                     android:textSize="24sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView4"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/myItemName"
                     app:layout_constraintEnd_toStartOf="@+id/they_swap_item_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/otherItemName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
@@ -62,14 +64,14 @@
                     tools:text="@string/mock_item_title" />
 
             <ImageView
-                    android:id="@+id/they_swap_item_image"
+                    android:id="@+id/myItemPhoto"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintDimensionRatio="H,1:1"
                     app:layout_constraintEnd_toStartOf="@+id/swap_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    app:layout_constraintTop_toBottomOf="@+id/myItemName"
                     app:srcCompat="@drawable/book" />
 
             <ImageView
@@ -78,11 +80,11 @@
                     android:layout_height="30dp"
                     android:adjustViewBounds="false"
                     android:gravity="center|center_horizontal"
-                    app:layout_constraintBottom_toBottomOf="@+id/you_swap_item_image"
-                    app:layout_constraintEnd_toStartOf="@+id/you_swap_item_image"
+                    app:layout_constraintBottom_toBottomOf="@+id/otherItemPhoto"
+                    app:layout_constraintEnd_toStartOf="@+id/otherItemPhoto"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/they_swap_item_image"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    app:layout_constraintStart_toEndOf="@+id/myItemPhoto"
+                    app:layout_constraintTop_toBottomOf="@+id/myItemName"
                     app:srcCompat="@drawable/swap" />
 
             <TextView
@@ -94,29 +96,30 @@
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorTitle"
                     android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/you_swap_item_title"
                     app:layout_constraintTop_toTopOf="@+id/you_swap_item_title" />
 
             <ImageView
-                    android:id="@+id/you_swap_item_image"
+                    android:id="@+id/otherItemPhoto"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="8dp"
                     app:layout_constraintDimensionRatio="H,1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/swap_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:layout_constraintTop_toBottomOf="@+id/otherItemName"
                     app:srcCompat="@drawable/book" />
 
             <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/myItemName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorTitle"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toTopOf="@+id/they_swap_item_image"
+                    app:layout_constraintBottom_toTopOf="@+id/myItemPhoto"
                     app:layout_constraintEnd_toEndOf="@+id/you_swap_item_title"
                     app:layout_constraintStart_toStartOf="@+id/you_swap_item_title"
                     app:layout_constraintTop_toBottomOf="@+id/you_swap_item_title"
@@ -139,8 +142,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/swap_info"
+                    android:textAlignment="center"
                     android:textColor="@color/colorTitle"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
 
             <TextView
@@ -154,26 +159,26 @@
                     android:textSize="20sp" />
 
             <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/toName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorTitle"
+                    android:textColor="@color/fontDark"
                     android:textSize="18sp"
                     tools:text="@string/mock_person_name" />
 
             <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/toEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorTitle"
+                    android:textColor="@color/fontDark"
                     android:textSize="18sp"
                     tools:text="@string/mock_person_email" />
 
             <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/toPhone"
                     android:layout_width="174dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorTitle"
+                    android:textColor="@color/fontDark"
                     android:textSize="18sp"
                     tools:text="@string/mock_person_phone_number" />
 
@@ -189,31 +194,31 @@
                     android:textSize="20sp" />
 
             <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/fromName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/colorTitle"
+                    android:textColor="@color/fontDark"
                     android:textSize="18sp"
                     tools:text="@string/mock_person_name" />
 
             <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/fromEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="@string/mock_person_email"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/colorTitle"
-                    android:textSize="18sp" />
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_email" />
 
             <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/fromPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="@string/mock_person_phone_number"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/colorTitle"
-                    android:textSize="18sp" />
+                    android:textColor="@color/fontDark"
+                    android:textSize="18sp"
+                    tools:text="@string/mock_person_phone_number" />
 
         </LinearLayout>
 
@@ -225,8 +230,26 @@
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_flag_24px"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Zgłoś nadużycie"
+            android:textAllCaps="false"
+            android:textColor="@color/fontLight"
+            android:textSize="14sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cancelButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/check_small"
@@ -234,36 +257,13 @@
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="@string/confirm"
+            android:text="Zakończ wymianę"
             android:textAllCaps="false"
             android:textColor="@color/fontLight"
-            android:textSize="16sp"
-            android:visibility="invisible"
+            android:textSize="14sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.213"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@android:color/transparent"
-            android:drawableStart="@drawable/cancel_small"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/cancel"
-            android:textAllCaps="false"
-            android:textColor="@color/fontLight"
-            android:textSize="16sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.809"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/confirmButton" />
 
 </android.support.constraint.ConstraintLayout>
