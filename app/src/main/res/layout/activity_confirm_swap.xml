@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/confirmButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/they_swap_item_title2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="@string/you_swap"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@id/myItemName"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                    android:id="@+id/myItemPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/they_swap_item_title2"
+                    app:srcCompat="@drawable/book" />
+
+            <TextView
+                    android:id="@+id/myItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/fontDark"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/mock_item_title" />
+
+            <TextView
+                    android:id="@+id/priceCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/price_point"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintTop_toBottomOf="@+id/myItemName"
+                    tools:text="@string/price_point" />
+
+            <TextView
+                    android:id="@+id/myPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/they_swap_item_title2"
+                    app:layout_constraintTop_toBottomOf="@+id/priceCategory"
+                    tools:text="@string/mock_price_point" />
+        </android.support.constraint.ConstraintLayout>
+
+        <ImageView
+                android:id="@+id/swap_icon"
+                android:layout_width="82dp"
+                android:layout_height="101dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="false"
+                android:gravity="center_horizontal|center_vertical"
+                app:srcCompat="@drawable/swap" />
+
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#CAECD0">
+
+            <TextView
+                    android:id="@+id/otherItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/fontDark"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@+id/they_swap_item_title3"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/mock_item_title" />
+
+            <TextView
+                    android:id="@+id/they_swap_item_title3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="@string/they_swap"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorTitle"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/otherItemName"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                    android:id="@+id/otherItemPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:layout_constraintDimensionRatio="w,1:1"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.719"
+                    app:layout_constraintStart_toStartOf="@+id/they_swap_item_title3"
+                    app:layout_constraintTop_toBottomOf="@+id/they_swap_item_title3"
+                    app:srcCompat="@drawable/book" />
+
+            <TextView
+                    android:id="@+id/priceCategory1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/price_point"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/otherItemName"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="@+id/otherItemName"
+                    app:layout_constraintTop_toBottomOf="@+id/otherItemName"
+                    tools:text="@string/price_point" />
+
+            <TextView
+                    android:id="@+id/otherPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mock_price_point"
+                    android:textColor="@color/fontDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/priceCategory1"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="@+id/priceCategory1"
+                    app:layout_constraintTop_toBottomOf="@+id/priceCategory1" />
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+
+    <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/check_small"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/fontLight"
+            android:textSize="16sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.213"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/cancel_small"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/fontLight"
+            android:textSize="16sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.809"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <mwo.lab.tapswap.views.LoadingView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+</android.support.constraint.ConstraintLayout>
