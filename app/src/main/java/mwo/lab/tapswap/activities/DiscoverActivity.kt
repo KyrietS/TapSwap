@@ -92,7 +92,7 @@ class DiscoverActivity : AppCompatActivity() {
 
         // Setting up button on click listeners
         findViewById<Button>(R.id.wantedBtn).setOnClickListener { moveNextOrPrevious(-1) }
-        findViewById<Button>(R.id.wantedBtn).setOnClickListener { moveNextOrPrevious(1) }
+        findViewById<Button>(R.id.unwantedBtn).setOnClickListener { moveNextOrPrevious(1) }
     }
 
     /**
