@@ -13,7 +13,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/confirmButton"
+            app:layout_constraintBottom_toTopOf="@+id/reportButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -227,7 +227,7 @@
 
 
     <Button
-            android:id="@+id/confirmButton"
+            android:id="@+id/reportButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -243,11 +243,11 @@
             android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cancelButton"
+            app:layout_constraintEnd_toStartOf="@+id/finishButton"
             app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/finishButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -264,6 +264,12 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/confirmButton" />
+            app:layout_constraintStart_toEndOf="@id/reportButton" />
+
+    <mwo.lab.tapswap.views.LoadingView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

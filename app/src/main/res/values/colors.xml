@@ -16,4 +16,5 @@
     <color name="pendingMatch">#FF9800</color>
     <color name="waitForOthersMatch">#2E7BCF</color>
     <color name="startedMatch">#10b515</color>
+    <color name="finishedMatch">#000000</color>
 </resources>

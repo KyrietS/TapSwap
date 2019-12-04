@@ -61,6 +61,10 @@ interface Endpoints {
     @POST("/matches/decline-match")
     fun declineMatch(@Field("matchId") matchId: Int) : Call<RequestResult>
 
+    @FormUrlEncoded
+    @POST("/matches/confirm-match")
+    fun confirmMatch(@Field("matchId") matchId: Int) : Call<RequestResult>
+
     @GET("/auth/istokenvalid")
     fun isTokenValid() : Call<RequestResult>
 

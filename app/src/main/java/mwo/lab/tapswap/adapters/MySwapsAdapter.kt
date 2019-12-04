@@ -93,6 +93,10 @@ class MySwapsAdapter(
                 viewHolder.status.text = "Rozpoczęta"
                 viewHolder.status.setTextColor(ContextCompat.getColor(context, R.color.startedMatch))
             }
+            "CONFIRMED" -> {
+                viewHolder.status.text = "Zakończona"
+                viewHolder.status.setTextColor(ContextCompat.getColor(context, R.color.finishedMatch))
+            }
             else -> {
                 viewHolder.status.text = "Nieznany status"
                 viewHolder.status.setTextColor(ContextCompat.getColor(context, R.color.fontLight))
@@ -155,6 +159,9 @@ class MySwapsAdapter(
                 Intent(context, ConfirmSwapActivity::class.java)
             }
             "ACCEPTED_BY_ALL" -> {
+                Intent(context, SingleSwapActivity::class.java)
+            }
+            "CONFIRMED" -> {
                 Intent(context, SingleSwapActivity::class.java)
             }
             else -> {
