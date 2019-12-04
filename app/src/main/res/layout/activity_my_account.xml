@@ -19,8 +19,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="24dp"
-                android:src="@drawable/tapswap_logo"
+                android:src="@drawable/user_placeholder"
                 app:srcCompat="@drawable/user_placeholder" />
+
+
+        <mwo.lab.tapswap.views.LoadingView
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
         <!-- Name Label -->
         <android.support.design.widget.TextInputLayout
@@ -33,7 +40,7 @@
                     android:id="@+id/input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mock_person_name"
+                    android:hint="Imię"
                     android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
@@ -48,7 +55,7 @@
                     android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mock_person_email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -64,7 +71,7 @@
                     android:id="@+id/input_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mock_person_phone_number"
+                    android:hint="@string/phone_number"
                     android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
@@ -134,4 +141,5 @@
                 android:visibility="gone" />
 
     </LinearLayout>
+
 </ScrollView>
