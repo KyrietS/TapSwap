@@ -47,6 +47,16 @@ interface Endpoints {
     @POST("/users/login")
     fun login(@Field("email") email: String, @Field("password") password: String) : Call<LoginResult>
 
+    @GET("/users/myself")
+    fun getMyself() : Call<Myself>
+
+    @FormUrlEncoded
+    @PUT("/users/update")
+    fun updateUser(@Field("new_name") newName: String?,
+                   @Field("new_phone") newPhone: String?,
+                   @Field("password") password: String,
+                   @Field("new_password") newPassword: String?) : Call<RequestResult>
+
     @GET("/matches/get-pending-matches")
     fun getPendingMatches() : Call<Matches>
 
